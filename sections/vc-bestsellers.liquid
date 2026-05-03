@@ -101,6 +101,10 @@
     overflow: hidden;
   }
 
+  #VcBestsellers-{{ section.id }} .vc-card--empty .vc-card__media {
+    aspect-ratio: 5 / 3;
+  }
+
   #VcBestsellers-{{ section.id }} .vc-card__image,
   #VcBestsellers-{{ section.id }} .vc-card__placeholder-svg {
     width: 100%;
@@ -375,7 +379,7 @@
               </div>
             </a>
           {%- else -%}
-            <div class="vc-card" {{ block.shopify_attributes }}>
+            <div class="vc-card vc-card--empty" {{ block.shopify_attributes }}>
               <div class="vc-card__media">
                 <div class="vc-card__placeholder">Select a product in the editor</div>
               </div>

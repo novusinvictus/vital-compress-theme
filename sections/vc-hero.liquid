@@ -8,6 +8,11 @@
   endif
 
   assign hero_alt_fallback = section.settings.headline | default: 'Hero image'
+
+  assign has_image = false
+  if section.settings.desktop_image != blank or section.settings.mobile_image != blank
+    assign has_image = true
+  endif
 -%}
 
 {%- style -%}
@@ -242,10 +247,21 @@
       object-fit: cover;
       border-radius: 12px;
     }
+
+    #VcHero-{{ section.id }}.vc-hero--no-image .vc-hero__inner {
+      grid-template-columns: 1fr;
+    }
+
+    #VcHero-{{ section.id }}.vc-hero--no-image .vc-hero__content {
+      align-items: center;
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
   }
 {%- endstyle -%}
 
-<div class="vc-hero" id="VcHero-{{ section.id }}">
+<div class="vc-hero{% unless has_image %} vc-hero--no-image{% endunless %}" id="VcHero-{{ section.id }}">
   <div class="vc-hero__inner page-width">
     <div class="vc-hero__content">
       {%- if section.settings.star_badge_show and section.settings.star_badge_text != blank -%}
@@ -313,8 +329,8 @@
       {%- endif -%}
     </div>
 
-    <div class="vc-hero__media">
-      {%- if section.settings.desktop_image != blank or section.settings.mobile_image != blank -%}
+    {%- if has_image -%}
+      <div class="vc-hero__media">
         <picture>
           {%- if section.settings.mobile_image != blank -%}
             <source
@@ -354,10 +370,8 @@
             }}
           {%- endif -%}
         </picture>
-      {%- else -%}
-        <div class="vc-hero__image-placeholder" role="img" aria-label="Hero image placeholder"></div>
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
