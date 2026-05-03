@@ -1,0 +1,412 @@
+{%- liquid
+  assign review_blocks = section.blocks | where: 'type', 'review'
+-%}
+
+{%- style -%}
+  #VcCustomerReviews-{{ section.id }} {
+    padding: 64px 0;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr__inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr__heading {
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    color: rgb(var(--color-foreground));
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr__subheading {
+    font-family: var(--font-body-family);
+    color: rgba(var(--color-foreground), 0.7);
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 540px;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 32px;
+    border-radius: 12px;
+    background-color: rgba(var(--color-foreground), 0.04);
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    line-height: 0;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__star {
+    width: 16px;
+    height: 16px;
+    fill: rgb(var(--color-button));
+    display: block;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__body {
+    font-family: var(--font-body-family);
+    font-size: 16px;
+    line-height: 1.55;
+    color: rgba(var(--color-foreground), 0.85);
+    margin: 0;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__spacer {
+    margin-top: auto;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__attribution {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__avatar-wrap {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: rgb(var(--color-background));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__avatar-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(var(--color-foreground), 0.6);
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__person {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__name {
+    font-family: var(--font-body-family);
+    font-size: 15px;
+    font-weight: 600;
+    color: rgb(var(--color-foreground));
+    margin: 0;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__location {
+    font-family: var(--font-body-family);
+    font-size: 13px;
+    color: rgba(var(--color-foreground), 0.6);
+    margin: 0;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(var(--color-foreground), 0.1);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-image-wrap {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: rgb(var(--color-background));
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-image,
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-title {
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(var(--color-foreground));
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-price {
+    font-family: var(--font-body-family);
+    font-size: 13px;
+    color: rgba(var(--color-foreground), 0.7);
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    #VcCustomerReviews-{{ section.id }} .vc-cr__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    #VcCustomerReviews-{{ section.id }} {
+      padding: 96px 0;
+    }
+
+    #VcCustomerReviews-{{ section.id }} .vc-cr__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+{%- endstyle -%}
+
+{%- capture star_svg -%}
+  <svg class="vc-cr-card__star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+{%- endcapture -%}
+
+<div class="vc-customer-reviews color-{{ section.settings.color_scheme }} gradient" id="VcCustomerReviews-{{ section.id }}">
+  <div class="vc-cr__inner page-width">
+    <div class="vc-cr__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="vc-cr__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="vc-cr__subheading">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="vc-cr__grid">
+      {%- for block in review_blocks -%}
+        {%- assign rating = block.settings.star_rating | default: 5 -%}
+        {%- assign linked = block.settings.linked_product -%}
+        {%- assign initial = block.settings.name | strip | slice: 0 | upcase -%}
+        <article class="vc-cr-card" {{ block.shopify_attributes }}>
+          <div class="vc-cr-card__stars" aria-label="{{ rating }} out of 5 stars">
+            {%- for i in (1..rating) -%}{{ star_svg }}{%- endfor -%}
+          </div>
+
+          {%- if block.settings.body != blank -%}
+            <p class="vc-cr-card__body">{{ block.settings.body | escape }}</p>
+          {%- endif -%}
+
+          <div class="vc-cr-card__spacer"></div>
+
+          <div class="vc-cr-card__attribution">
+            <div class="vc-cr-card__avatar-wrap">
+              {%- if block.settings.avatar != blank -%}
+                {{
+                  block.settings.avatar
+                  | image_url: width: 120
+                  | image_tag:
+                    widths: '40, 80, 120',
+                    sizes: '40px',
+                    loading: 'lazy',
+                    alt: block.settings.name | default: 'Customer',
+                    class: 'vc-cr-card__avatar'
+                }}
+              {%- else -%}
+                <span class="vc-cr-card__avatar-fallback" aria-hidden="true">{{ initial | default: '•' }}</span>
+              {%- endif -%}
+            </div>
+            <div class="vc-cr-card__person">
+              {%- if block.settings.name != blank -%}
+                <p class="vc-cr-card__name">{{ block.settings.name | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.location != blank -%}
+                <p class="vc-cr-card__location">{{ block.settings.location | escape }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- if linked != blank -%}
+            <a class="vc-cr-card__product" href="{{ linked.url }}">
+              <div class="vc-cr-card__product-image-wrap">
+                {%- if linked.featured_image != blank -%}
+                  {{
+                    linked.featured_image
+                    | image_url: width: 168
+                    | image_tag:
+                      widths: '56, 112, 168',
+                      sizes: '56px',
+                      loading: 'lazy',
+                      alt: linked.featured_image.alt | default: linked.title,
+                      class: 'vc-cr-card__product-image'
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'vc-cr-card__product-placeholder placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              <div class="vc-cr-card__product-info">
+                <p class="vc-cr-card__product-title">{{ linked.title | escape }}</p>
+                <p class="vc-cr-card__product-price">{{ linked.price | money }}</p>
+              </div>
+            </a>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VC Customer Reviews",
+  "tag": "section",
+  "max_blocks": 6,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What our customers say"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "star_rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review body"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar (optional)"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location"
+        },
+        {
+          "type": "product",
+          "id": "linked_product",
+          "label": "Linked product (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Customer Reviews",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "What our customers say"
+      },
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "body": "Three months in and the difference is night and day. I can walk the dog without my knee aching by the end. Bamboo material is so comfortable I forget I'm wearing it.",
+            "name": "Margaret T.",
+            "location": "Brisbane, QLD"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "body": "After my knee replacement my physio recommended graduated compression. The Vital Compress sleeve fits perfectly and I wear it daily. The support is excellent and the fabric breathes well in summer.",
+            "name": "David L.",
+            "location": "Perth, WA"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "body": "I've tried three other brands. Vital Compress is the only one that doesn't slip down or pinch behind the knee. The bamboo doesn't smell after long wear either. Repurchasing.",
+            "name": "Jennifer S.",
+            "location": "Melbourne, VIC"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
