@@ -74,16 +74,16 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     padding: 18px 36px;
-    border: 1px solid rgb(var(--color-button));
+    border: 0;
     border-radius: 4px;
     text-decoration: none;
     margin-top: 32px;
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition: filter 0.15s ease, box-shadow 0.15s ease;
     cursor: pointer;
   }
 
   #VcHero-{{ section.id }} .vc-hero__cta:hover {
-    background-color: rgba(var(--color-button), 0.92);
+    filter: brightness(0.92);
   }
 
   #VcHero-{{ section.id }} .vc-hero__cta:focus-visible {
