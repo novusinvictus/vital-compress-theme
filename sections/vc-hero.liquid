@@ -12,8 +12,7 @@
 
 {%- style -%}
   #VcHero-{{ section.id }} {
-    padding-top: 40px;
-    padding-bottom: 0;
+    padding: 40px 0 0;
     background-color: rgb(var(--color-background));
     color: rgb(var(--color-foreground));
     text-align: center;
@@ -23,7 +22,41 @@
   #VcHero-{{ section.id }} .vc-hero__inner {
     display: flex;
     flex-direction: column;
+  }
+
+  #VcHero-{{ section.id }} .vc-hero__content {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+  }
+
+  #VcHero-{{ section.id }} .vc-hero__star-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(var(--color-foreground), 0.06);
+    color: rgb(var(--color-foreground));
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-family: var(--font-body-family);
+    font-style: var(--font-body-style);
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  #VcHero-{{ section.id }} .vc-hero__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    line-height: 0;
+  }
+
+  #VcHero-{{ section.id }} .vc-hero__star {
+    width: 16px;
+    height: 16px;
+    fill: rgb(var(--color-button));
+    display: block;
   }
 
   #VcHero-{{ section.id }} .vc-hero__badge {
@@ -40,7 +73,7 @@
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin: 0;
+    margin: 16px 0 0;
   }
 
   #VcHero-{{ section.id }} .vc-hero__headline {
@@ -115,8 +148,8 @@
   }
 
   #VcHero-{{ section.id }} .vc-hero__feature-icon {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
     display: block;
   }
@@ -129,7 +162,7 @@
     line-height: 1.3;
   }
 
-  #VcHero-{{ section.id }} .vc-hero__image-wrap {
+  #VcHero-{{ section.id }} .vc-hero__media {
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-top: 64px;
@@ -151,127 +184,179 @@
 
   @media screen and (min-width: 750px) {
     #VcHero-{{ section.id }} {
-      padding-top: 64px;
+      padding: 64px 0;
+      text-align: left;
+    }
+
+    #VcHero-{{ section.id }} .vc-hero__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: stretch;
+    }
+
+    #VcHero-{{ section.id }} .vc-hero__content {
+      align-items: flex-start;
+      text-align: left;
     }
 
     #VcHero-{{ section.id }} .vc-hero__subheadline {
       font-size: 18px;
+      max-width: none;
     }
 
     #VcHero-{{ section.id }} .vc-hero__features {
       grid-template-columns: repeat({{ section.blocks.size | at_least: 1 | at_most: 6 }}, minmax(0, auto));
-      justify-content: center;
-      gap: 32px;
+      justify-content: flex-start;
+      gap: 24px;
+    }
+
+    #VcHero-{{ section.id }} .vc-hero__feature {
+      align-items: center;
+    }
+
+    #VcHero-{{ section.id }} .vc-hero__media {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 0;
+      min-height: 600px;
+      height: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    #VcHero-{{ section.id }} .vc-hero__media picture,
+    #VcHero-{{ section.id }} .vc-hero__media source {
+      display: block;
+      width: 100%;
+      height: 100%;
     }
 
     #VcHero-{{ section.id }} .vc-hero__image,
     #VcHero-{{ section.id }} .vc-hero__image-placeholder {
-      aspect-ratio: 16 / 7;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      object-fit: cover;
+      border-radius: 12px;
     }
   }
 {%- endstyle -%}
 
 <div class="vc-hero" id="VcHero-{{ section.id }}">
   <div class="vc-hero__inner page-width">
-    {%- if section.settings.badge_text != blank -%}
-      <p class="vc-hero__badge">{{ section.settings.badge_text | escape }}</p>
-    {%- endif -%}
+    <div class="vc-hero__content">
+      {%- if section.settings.star_badge_show and section.settings.star_badge_text != blank -%}
+        <p class="vc-hero__star-badge">
+          <span class="vc-hero__stars" aria-hidden="true">
+            {%- for i in (1..section.settings.star_count) -%}
+              <svg class="vc-hero__star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            {%- endfor -%}
+          </span>
+          <span>{{ section.settings.star_badge_text | escape }}</span>
+        </p>
+      {%- endif -%}
 
-    {%- if section.settings.headline != blank -%}
-      <h1 class="vc-hero__headline">{{ section.settings.headline | escape }}</h1>
-    {%- endif -%}
+      {%- if section.settings.badge_text != blank -%}
+        <p class="vc-hero__badge">{{ section.settings.badge_text | escape }}</p>
+      {%- endif -%}
 
-    {%- if section.settings.subheadline != blank -%}
-      <p class="vc-hero__subheadline">{{ section.settings.subheadline | escape }}</p>
-    {%- endif -%}
+      {%- if section.settings.headline != blank -%}
+        <h1 class="vc-hero__headline">{{ section.settings.headline | escape }}</h1>
+      {%- endif -%}
 
-    {%- if section.settings.cta_label != blank -%}
-      <a
-        class="vc-hero__cta"
-        {% if section.settings.cta_link == blank %}
-          role="link" aria-disabled="true"
-        {% else %}
-          href="{{ section.settings.cta_link }}"
-        {% endif %}
-      >
-        {{- section.settings.cta_label | escape -}}
-      </a>
-    {%- endif -%}
+      {%- if section.settings.subheadline != blank -%}
+        <p class="vc-hero__subheadline">{{ section.settings.subheadline | escape }}</p>
+      {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
-      <ul class="vc-hero__features" role="list">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'feature' -%}
-            <li class="vc-hero__feature" {{ block.shopify_attributes }}>
-              {%- if block.settings.icon != blank -%}
-                {{
-                  block.settings.icon
-                  | image_url: width: 120
-                  | image_tag:
-                    widths: '40, 80, 120',
-                    sizes: '40px',
-                    loading: 'lazy',
-                    alt: block.settings.icon.alt | default: '',
-                    class: 'vc-hero__feature-icon'
-                }}
-              {%- endif -%}
-              {%- if block.settings.label != blank -%}
-                <span class="vc-hero__feature-label">{{ block.settings.label | escape }}</span>
-              {%- endif -%}
-            </li>
+      {%- if section.settings.cta_label != blank -%}
+        <a
+          class="vc-hero__cta"
+          {% if section.settings.cta_link == blank %}
+            role="link" aria-disabled="true"
+          {% else %}
+            href="{{ section.settings.cta_link }}"
+          {% endif %}
+        >
+          {{- section.settings.cta_label | escape -}}
+        </a>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="vc-hero__features" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'feature' -%}
+              <li class="vc-hero__feature" {{ block.shopify_attributes }}>
+                {%- if block.settings.icon != blank -%}
+                  {{
+                    block.settings.icon
+                    | image_url: width: 96
+                    | image_tag:
+                      widths: '32, 64, 96',
+                      sizes: '32px',
+                      loading: 'lazy',
+                      alt: block.settings.icon.alt | default: '',
+                      class: 'vc-hero__feature-icon'
+                  }}
+                {%- endif -%}
+                {%- if block.settings.label != blank -%}
+                  <span class="vc-hero__feature-label">{{ block.settings.label | escape }}</span>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    <div class="vc-hero__media">
+      {%- if section.settings.desktop_image != blank or section.settings.mobile_image != blank -%}
+        <picture>
+          {%- if section.settings.mobile_image != blank -%}
+            <source
+              media="(max-width: 749px)"
+              srcset="
+                {{ section.settings.mobile_image | image_url: width: 375 }} 375w,
+                {{ section.settings.mobile_image | image_url: width: 750 }} 750w,
+                {{ section.settings.mobile_image | image_url: width: 1100 }} 1100w,
+                {{ section.settings.mobile_image | image_url: width: 1500 }} 1500w
+              "
+              sizes="100vw"
+            >
           {%- endif -%}
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
+          {%- if section.settings.desktop_image != blank -%}
+            {{
+              section.settings.desktop_image
+              | image_url: width: 3000
+              | image_tag:
+                widths: '750, 1100, 1500, 2000, 3000',
+                sizes: '(min-width: 750px) 50vw, 100vw',
+                loading: image_loading,
+                fetchpriority: image_fetch_priority,
+                alt: section.settings.desktop_image.alt | default: hero_alt_fallback,
+                class: 'vc-hero__image'
+            }}
+          {%- elsif section.settings.mobile_image != blank -%}
+            {{
+              section.settings.mobile_image
+              | image_url: width: 1500
+              | image_tag:
+                widths: '375, 750, 1100, 1500',
+                sizes: '(min-width: 750px) 50vw, 100vw',
+                loading: image_loading,
+                fetchpriority: image_fetch_priority,
+                alt: section.settings.mobile_image.alt | default: hero_alt_fallback,
+                class: 'vc-hero__image'
+            }}
+          {%- endif -%}
+        </picture>
+      {%- else -%}
+        <div class="vc-hero__image-placeholder" role="img" aria-label="Hero image placeholder"></div>
+      {%- endif -%}
+    </div>
   </div>
-
-  {%- if section.settings.desktop_image != blank or section.settings.mobile_image != blank -%}
-    <div class="vc-hero__image-wrap">
-      <picture>
-        {%- if section.settings.mobile_image != blank -%}
-          <source
-            media="(max-width: 749px)"
-            srcset="
-              {{ section.settings.mobile_image | image_url: width: 375 }} 375w,
-              {{ section.settings.mobile_image | image_url: width: 750 }} 750w,
-              {{ section.settings.mobile_image | image_url: width: 1100 }} 1100w,
-              {{ section.settings.mobile_image | image_url: width: 1500 }} 1500w
-            "
-            sizes="100vw"
-          >
-        {%- endif -%}
-        {%- if section.settings.desktop_image != blank -%}
-          {{
-            section.settings.desktop_image
-            | image_url: width: 3000
-            | image_tag:
-              widths: '750, 1100, 1500, 2000, 3000',
-              sizes: '100vw',
-              loading: image_loading,
-              fetchpriority: image_fetch_priority,
-              alt: section.settings.desktop_image.alt | default: hero_alt_fallback,
-              class: 'vc-hero__image'
-          }}
-        {%- elsif section.settings.mobile_image != blank -%}
-          {{
-            section.settings.mobile_image
-            | image_url: width: 1500
-            | image_tag:
-              widths: '375, 750, 1100, 1500',
-              sizes: '100vw',
-              loading: image_loading,
-              fetchpriority: image_fetch_priority,
-              alt: section.settings.mobile_image.alt | default: hero_alt_fallback,
-              class: 'vc-hero__image'
-          }}
-        {%- endif -%}
-      </picture>
-    </div>
-  {%- else -%}
-    <div class="vc-hero__image-wrap">
-      <div class="vc-hero__image-placeholder" role="img" aria-label="Hero image placeholder"></div>
-    </div>
-  {%- endif -%}
 </div>
 
 {% schema %}
@@ -283,6 +368,31 @@
     "groups": ["header", "footer"]
   },
   "settings": [
+    {
+      "type": "header",
+      "content": "Social proof badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "star_badge_show",
+      "label": "Show star rating badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "star_badge_text",
+      "label": "Star badge text",
+      "default": "50,000+ customers in Australia"
+    },
+    {
+      "type": "range",
+      "id": "star_count",
+      "label": "Number of filled stars",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
     {
       "type": "header",
       "content": "Content"
@@ -328,7 +438,7 @@
       "type": "image_picker",
       "id": "desktop_image",
       "label": "Desktop image",
-      "info": "Recommended ratio 16:7. Set alt text in Files for accessibility."
+      "info": "Fills the right column, min-height 600px. Set alt text in Files for accessibility."
     },
     {
       "type": "image_picker",
@@ -346,7 +456,7 @@
           "type": "image_picker",
           "id": "icon",
           "label": "Icon image",
-          "info": "Square icon, displayed at 40×40."
+          "info": "Square icon, displayed at 32×32."
         },
         {
           "type": "text",
