@@ -57,6 +57,20 @@
         "mobile_image": "shopify://shop_images/Homepage_Image_-_Spring_Relief_Sale_32026_1.webp"
       }
     },
+    "vc_trust_logos": {
+      "type": "vc-trust-logos",
+      "blocks": {
+        "logo_1": { "type": "logo", "settings": { "alt_text": "Press 1" } },
+        "logo_2": { "type": "logo", "settings": { "alt_text": "Press 2" } },
+        "logo_3": { "type": "logo", "settings": { "alt_text": "Press 3" } },
+        "logo_4": { "type": "logo", "settings": { "alt_text": "Press 4" } }
+      },
+      "block_order": ["logo_1", "logo_2", "logo_3", "logo_4"],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "eyebrow_text": "AS SEEN IN"
+      }
+    },
     "vc_bestsellers": {
       "type": "vc-bestsellers",
       "blocks": {
@@ -320,6 +334,43 @@
         "cta_url": "shopify://collections/all"
       }
     },
+    "vc_customer_reviews": {
+      "type": "vc-customer-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "body": "Three months in and the difference is night and day. I can walk the dog without my knee aching by the end. Bamboo material is so comfortable I forget I'm wearing it.",
+            "name": "Margaret T.",
+            "location": "Brisbane, QLD"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "body": "After my knee replacement my physio recommended graduated compression. The Vital Compress sleeve fits perfectly and I wear it daily. The support is excellent and the fabric breathes well in summer.",
+            "name": "David L.",
+            "location": "Perth, WA"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "body": "I've tried three other brands. Vital Compress is the only one that doesn't slip down or pinch behind the knee. The bamboo doesn't smell after long wear either. Repurchasing.",
+            "name": "Jennifer S.",
+            "location": "Melbourne, VIC"
+          }
+        }
+      },
+      "block_order": ["review_1", "review_2", "review_3"],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "What our customers say"
+      }
+    },
     "vc_collections": {
       "type": "vc-collections",
       "blocks": {
@@ -362,6 +413,31 @@
         "heading": "Explore by Body Part"
       }
     },
+    "vc_trust_ratings": {
+      "type": "vc-trust-ratings",
+      "blocks": {
+        "platform_facebook": {
+          "type": "platform",
+          "settings": {
+            "platform_name": "Facebook",
+            "rating": 4.6,
+            "review_count": "1,847"
+          }
+        },
+        "platform_google": {
+          "type": "platform",
+          "settings": {
+            "platform_name": "Google",
+            "rating": 4.8,
+            "review_count": "2,394"
+          }
+        }
+      },
+      "block_order": ["platform_facebook", "platform_google"],
+      "settings": {
+        "heading": "Trusted by thousands across Australia"
+      }
+    },
     "vc_comparison": {
       "type": "vc-comparison",
       "blocks": {
@@ -387,45 +463,45 @@
           "type": "feature_row",
           "settings": {
             "label": "Walking comfort",
-            "col_1_active": true,
-            "col_2_active": true,
-            "col_3_active": true
+            "col_1_score": 5,
+            "col_2_score": 5,
+            "col_3_score": 5
           }
         },
         "row_recovery": {
           "type": "feature_row",
           "settings": {
             "label": "Post-surgery recovery",
-            "col_1_active": true,
-            "col_2_active": true,
-            "col_3_active": false
+            "col_1_score": 5,
+            "col_2_score": 4,
+            "col_3_score": 3
           }
         },
         "row_daily": {
           "type": "feature_row",
           "settings": {
             "label": "All-day wear",
-            "col_1_active": true,
-            "col_2_active": true,
-            "col_3_active": true
+            "col_1_score": 5,
+            "col_2_score": 5,
+            "col_3_score": 5
           }
         },
         "row_sport": {
           "type": "feature_row",
           "settings": {
             "label": "Sport activities",
-            "col_1_active": true,
-            "col_2_active": false,
-            "col_3_active": false
+            "col_1_score": 4,
+            "col_2_score": 5,
+            "col_3_score": 4
           }
         },
         "row_travel": {
           "type": "feature_row",
           "settings": {
             "label": "Travel-friendly",
-            "col_1_active": true,
-            "col_2_active": true,
-            "col_3_active": true
+            "col_1_score": 4,
+            "col_2_score": 4,
+            "col_3_score": 5
           }
         }
       },
@@ -458,10 +534,13 @@
   },
   "order": [
     "vc_hero_7ji4eQ",
+    "vc_trust_logos",
     "vc_bestsellers",
     "vc_mission",
     "vc_finder",
+    "vc_customer_reviews",
     "vc_collections",
+    "vc_trust_ratings",
     "vc_comparison",
     "vc_help"
   ]
