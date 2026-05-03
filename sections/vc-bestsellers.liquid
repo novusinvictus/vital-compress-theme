@@ -1,0 +1,459 @@
+{%- liquid
+  assign has_subheading = false
+  if section.settings.subheading != blank
+    assign has_subheading = true
+  endif
+-%}
+
+{%- style -%}
+  #VcBestsellers-{{ section.id }} {
+    padding: 56px 0;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__heading {
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    color: rgb(var(--color-foreground));
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__subheading {
+    font-family: var(--font-body-family);
+    color: rgba(var(--color-foreground), 0.7);
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 540px;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__top-link {
+    font-family: var(--font-body-family);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgb(var(--color-foreground));
+    text-decoration: none;
+    border-bottom: 1px solid rgb(var(--color-foreground));
+    padding-bottom: 2px;
+    transition: opacity 0.15s ease;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__top-link:hover {
+    opacity: 0.7;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__top-link:focus-visible {
+    outline: 2px solid rgb(var(--color-foreground));
+    outline-offset: 3px;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(var(--color-foreground), 0.04);
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__image,
+  #VcBestsellers-{{ section.id }} .vc-card__placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(var(--color-foreground), 0.4);
+    font-family: var(--font-body-family);
+    font-size: 13px;
+    text-align: center;
+    padding: 16px;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    font-family: var(--font-body-family);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 0 0;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__eyebrow {
+    font-family: var(--font-body-family);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(var(--color-foreground), 0.55);
+    margin: 0;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__title {
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    color: rgb(var(--color-foreground));
+    font-size: 15px;
+    line-height: 1.3;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--font-body-family);
+    font-size: 16px;
+    color: rgb(var(--color-foreground));
+    margin: 0;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__price-compare {
+    color: rgba(var(--color-foreground), 0.5);
+    text-decoration: line-through;
+    font-size: 14px;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__cta-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__cta {
+    display: inline-block;
+    background-color: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 18px 36px;
+    border: 0;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: filter 0.15s ease;
+    cursor: pointer;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__cta:hover {
+    filter: brightness(0.92);
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__cta:focus-visible {
+    outline: 2px solid rgb(var(--color-button));
+    outline-offset: 3px;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__cta[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media screen and (min-width: 750px) {
+    #VcBestsellers-{{ section.id }} {
+      padding: 80px 0;
+    }
+
+    #VcBestsellers-{{ section.id }} .vc-bestsellers__header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: end;
+      text-align: left;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    #VcBestsellers-{{ section.id }} .vc-bestsellers__header-text {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 720px;
+    }
+
+    #VcBestsellers-{{ section.id }} .vc-bestsellers__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    #VcBestsellers-{{ section.id }} .vc-card__title {
+      font-size: 16px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    #VcBestsellers-{{ section.id }} .vc-bestsellers__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="vc-bestsellers" id="VcBestsellers-{{ section.id }}">
+  <div class="vc-bestsellers__inner page-width">
+    <div class="vc-bestsellers__header">
+      <div class="vc-bestsellers__header-text">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="vc-bestsellers__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if has_subheading -%}
+          <p class="vc-bestsellers__subheading">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.top_link_label != blank -%}
+        <a
+          class="vc-bestsellers__top-link"
+          {% if section.settings.top_link_url == blank %}
+            role="link" aria-disabled="true"
+          {% else %}
+            href="{{ section.settings.top_link_url }}"
+          {% endif %}
+        >
+          {{- section.settings.top_link_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="vc-bestsellers__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'product_card' -%}
+          {%- assign product = block.settings.product -%}
+          {%- assign card_name = block.settings.custom_name | default: product.title -%}
+          {%- if product != blank -%}
+            <a class="vc-card" href="{{ product.url }}" {{ block.shopify_attributes }}>
+              <div class="vc-card__media">
+                {%- if product.compare_at_price > product.price -%}
+                  {%- assign discount_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+                  <span class="vc-card__badge">{{ discount_pct }}% Off</span>
+                {%- endif -%}
+                {%- if product.featured_image != blank -%}
+                  {{
+                    product.featured_image
+                    | image_url: width: 800
+                    | image_tag:
+                      widths: '200, 400, 600, 800',
+                      sizes: '(min-width: 990px) 25vw, (min-width: 750px) 50vw, 50vw',
+                      loading: 'lazy',
+                      alt: product.featured_image.alt | default: card_name,
+                      class: 'vc-card__image'
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'vc-card__placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              <div class="vc-card__body">
+                {%- if block.settings.eyebrow != blank -%}
+                  <p class="vc-card__eyebrow">{{ block.settings.eyebrow | escape }}</p>
+                {%- endif -%}
+                <h3 class="vc-card__title">{{ card_name | escape }}</h3>
+                <p class="vc-card__price">
+                  <span>{{ product.price | money }}</span>
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="vc-card__price-compare">{{ product.compare_at_price | money }}</span>
+                  {%- endif -%}
+                </p>
+              </div>
+            </a>
+          {%- else -%}
+            <div class="vc-card" {{ block.shopify_attributes }}>
+              <div class="vc-card__media">
+                <div class="vc-card__placeholder">Select a product in the editor</div>
+              </div>
+              <div class="vc-card__body">
+                {%- if block.settings.eyebrow != blank -%}
+                  <p class="vc-card__eyebrow">{{ block.settings.eyebrow | escape }}</p>
+                {%- endif -%}
+                <h3 class="vc-card__title">{{ block.settings.custom_name | default: 'Select a product' | escape }}</h3>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.bottom_cta_label != blank -%}
+      <div class="vc-bestsellers__cta-wrap">
+        <a
+          class="vc-bestsellers__cta"
+          {% if section.settings.bottom_cta_url == blank %}
+            role="link" aria-disabled="true"
+          {% else %}
+            href="{{ section.settings.bottom_cta_url }}"
+          {% endif %}
+        >
+          {{- section.settings.bottom_cta_label | escape -}}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VC Bestsellers",
+  "tag": "section",
+  "max_blocks": 4,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "header",
+      "content": "Top link"
+    },
+    {
+      "type": "text",
+      "id": "top_link_label",
+      "label": "Top link label",
+      "default": "SHOP ALL"
+    },
+    {
+      "type": "url",
+      "id": "top_link_url",
+      "label": "Top link URL"
+    },
+    {
+      "type": "header",
+      "content": "Bottom button"
+    },
+    {
+      "type": "text",
+      "id": "bottom_cta_label",
+      "label": "Bottom button label",
+      "default": "SHOP ALL"
+    },
+    {
+      "type": "url",
+      "id": "bottom_cta_url",
+      "label": "Bottom button URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow tag (e.g. Knee, Ankle)"
+        },
+        {
+          "type": "text",
+          "id": "custom_name",
+          "label": "Custom display name (optional)",
+          "info": "Overrides the product title if set."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Bestsellers",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+            "eyebrow": "Knee"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "eyebrow": "Ankle"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "eyebrow": "Hands"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "eyebrow": "Feet"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
