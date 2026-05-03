@@ -78,6 +78,20 @@
     flex-direction: column;
     text-decoration: none;
     color: inherit;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card:focus-visible {
+    outline: 2px solid rgb(var(--color-button));
+    outline-offset: 3px;
   }
 
   #VcBestsellers-{{ section.id }} .vc-card__media {
@@ -85,7 +99,6 @@
     aspect-ratio: 1 / 1;
     background-color: rgba(var(--color-foreground), 0.04);
     overflow: hidden;
-    border-radius: 4px;
   }
 
   #VcBestsellers-{{ section.id }} .vc-card__image,
@@ -94,6 +107,12 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.3s ease;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card:hover .vc-card__image,
+  #VcBestsellers-{{ section.id }} .vc-card:hover .vc-card__placeholder-svg {
+    transform: scale(1.02);
   }
 
   #VcBestsellers-{{ section.id }} .vc-card__placeholder {
@@ -111,24 +130,25 @@
 
   #VcBestsellers-{{ section.id }} .vc-card__badge {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: 12px;
+    left: 12px;
     background-color: rgb(var(--color-button));
-    color: rgb(var(--color-button-text));
+    color: #FFFFFF;
     font-family: var(--font-body-family);
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.5px;
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 999px;
     text-transform: uppercase;
+    z-index: 1;
   }
 
   #VcBestsellers-{{ section.id }} .vc-card__body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding: 12px 0 0;
+    padding: 16px;
   }
 
   #VcBestsellers-{{ section.id }} .vc-card__eyebrow {
@@ -143,15 +163,39 @@
 
   #VcBestsellers-{{ section.id }} .vc-card__title {
     font-family: var(--font-heading-family);
-    font-weight: var(--font-heading-weight);
+    font-weight: 500;
     color: rgb(var(--color-foreground));
     font-size: 15px;
-    line-height: 1.3;
+    line-height: 1.35;
     margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body-family);
+    font-size: 13px;
+    color: rgba(var(--color-foreground), 0.6);
+    margin: 0;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    line-height: 0;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-card__star {
+    width: 12px;
+    height: 12px;
+    fill: rgb(var(--color-button));
+    display: block;
   }
 
   #VcBestsellers-{{ section.id }} .vc-card__price {
@@ -164,10 +208,14 @@
     margin: 0;
   }
 
+  #VcBestsellers-{{ section.id }} .vc-card__price-current {
+    font-weight: 600;
+  }
+
   #VcBestsellers-{{ section.id }} .vc-card__price-compare {
     color: rgba(var(--color-foreground), 0.5);
     text-decoration: line-through;
-    font-size: 14px;
+    font-weight: 400;
   }
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__cta-wrap {
@@ -246,6 +294,10 @@
   }
 {%- endstyle -%}
 
+{%- capture star_svg -%}
+  <svg class="vc-card__star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+{%- endcapture -%}
+
 <div class="vc-bestsellers" id="VcBestsellers-{{ section.id }}">
   <div class="vc-bestsellers__inner page-width">
     <div class="vc-bestsellers__header">
@@ -281,7 +333,7 @@
               <div class="vc-card__media">
                 {%- if product.compare_at_price > product.price -%}
                   {%- assign discount_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
-                  <span class="vc-card__badge">{{ discount_pct }}% Off</span>
+                  <span class="vc-card__badge">{{ discount_pct }}% OFF</span>
                 {%- endif -%}
                 {%- if product.featured_image != blank -%}
                   {{
@@ -303,8 +355,17 @@
                   <p class="vc-card__eyebrow">{{ block.settings.eyebrow | escape }}</p>
                 {%- endif -%}
                 <h3 class="vc-card__title">{{ card_name | escape }}</h3>
+                {%- if block.settings.review_count > 0 -%}
+                  {%- assign filled_count = block.settings.star_rating | floor -%}
+                  <p class="vc-card__rating">
+                    <span class="vc-card__stars" aria-label="{{ block.settings.star_rating }} out of 5 stars">
+                      {%- for i in (1..filled_count) -%}{{ star_svg }}{%- endfor -%}
+                    </span>
+                    <span>({{ block.settings.review_count }})</span>
+                  </p>
+                {%- endif -%}
                 <p class="vc-card__price">
-                  <span>{{ product.price | money }}</span>
+                  <span class="vc-card__price-current">{{ product.price | money }}</span>
                   {%- if product.compare_at_price > product.price -%}
                     <span class="vc-card__price-compare">{{ product.compare_at_price | money }}</span>
                   {%- endif -%}
@@ -420,6 +481,26 @@
           "id": "custom_name",
           "label": "Custom display name (optional)",
           "info": "Overrides the product title if set."
+        },
+        {
+          "type": "header",
+          "content": "Social proof"
+        },
+        {
+          "type": "number",
+          "id": "review_count",
+          "label": "Review count",
+          "info": "Set to 0 to hide the rating row.",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "star_rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 0.5,
+          "default": 5
         }
       ]
     }
