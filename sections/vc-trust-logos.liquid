@@ -1,0 +1,207 @@
+{%- liquid
+  assign logo_blocks = section.blocks | where: 'type', 'logo'
+-%}
+
+{%- style -%}
+  #VcTrustLogos-{{ section.id }} {
+    padding: 40px 0;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    text-align: center;
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__eyebrow {
+    font-family: var(--font-body-family);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(var(--color-foreground), 0.6);
+    margin: 0;
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__divider {
+    display: none;
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    align-items: center;
+    width: 100%;
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__image {
+    max-height: 32px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(0.6);
+    transition: filter 0.2s ease;
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__item:hover .vc-trust-logos__image {
+    filter: grayscale(0%) opacity(1);
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__placeholder {
+    width: 100%;
+    max-width: 120px;
+    height: 32px;
+    background-color: rgba(var(--color-foreground), 0.06);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body-family);
+    font-size: 11px;
+    color: rgba(var(--color-foreground), 0.4);
+  }
+
+  @media screen and (min-width: 750px) {
+    #VcTrustLogos-{{ section.id }} {
+      padding: 56px 0;
+    }
+
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__inner {
+      flex-direction: row;
+      align-items: stretch;
+      gap: 32px;
+      text-align: left;
+    }
+
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__intro {
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__divider {
+      display: block;
+      width: 1px;
+      background-color: rgba(var(--color-foreground), 0.15);
+      flex-shrink: 0;
+    }
+
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__grid {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 32px;
+      flex-grow: 1;
+    }
+  }
+{%- endstyle -%}
+
+<div class="vc-trust-logos color-{{ section.settings.color_scheme }} gradient" id="VcTrustLogos-{{ section.id }}">
+  <div class="vc-trust-logos__inner page-width">
+    <div class="vc-trust-logos__intro">
+      {%- if section.settings.eyebrow_text != blank -%}
+        <p class="vc-trust-logos__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="vc-trust-logos__divider" aria-hidden="true"></div>
+
+    <div class="vc-trust-logos__grid">
+      {%- if logo_blocks.size > 0 -%}
+        {%- for block in logo_blocks -%}
+          {%- assign alt = block.settings.alt_text | default: 'Press logo' -%}
+          <div class="vc-trust-logos__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 240
+                | image_tag:
+                  widths: '120, 240',
+                  sizes: '120px',
+                  loading: 'lazy',
+                  alt: alt,
+                  class: 'vc-trust-logos__image'
+              }}
+            {%- else -%}
+              <div class="vc-trust-logos__placeholder">{{ alt | escape }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VC Trust Logo Bar",
+  "tag": "section",
+  "max_blocks": 8,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow text",
+      "default": "AS SEEN IN"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt text",
+          "default": "Press logo"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Trust Logo Bar",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "eyebrow_text": "AS SEEN IN"
+      },
+      "blocks": [
+        { "type": "logo", "settings": { "alt_text": "Press 1" } },
+        { "type": "logo", "settings": { "alt_text": "Press 2" } },
+        { "type": "logo", "settings": { "alt_text": "Press 3" } },
+        { "type": "logo", "settings": { "alt_text": "Press 4" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
