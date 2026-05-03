@@ -45,6 +45,9 @@
       ],
       "name": "Hero",
       "settings": {
+        "star_badge_show": true,
+        "star_badge_text": "50,000+ customers in Australia",
+        "star_count": 5,
         "badge_text": "Premium Bamboo Compression",
         "headline": "Lasting relief, all-day comfort",
         "subheadline": "Engineered for those who refuse to slow down",
@@ -58,25 +61,41 @@
         "card_knee": {
           "type": "product_card",
           "settings": {
-            "eyebrow": "Knee"
+            "product": "",
+            "eyebrow": "Knee",
+            "custom_name": "",
+            "review_count": 1247,
+            "star_rating": 5
           }
         },
         "card_ankle": {
           "type": "product_card",
           "settings": {
-            "eyebrow": "Ankle"
+            "product": "",
+            "eyebrow": "Ankle",
+            "custom_name": "",
+            "review_count": 0,
+            "star_rating": 5
           }
         },
         "card_hands": {
           "type": "product_card",
           "settings": {
-            "eyebrow": "Hands"
+            "product": "",
+            "eyebrow": "Hands",
+            "custom_name": "",
+            "review_count": 0,
+            "star_rating": 5
           }
         },
         "card_feet": {
           "type": "product_card",
           "settings": {
-            "eyebrow": "Feet"
+            "product": "",
+            "eyebrow": "Feet",
+            "custom_name": "",
+            "review_count": 0,
+            "star_rating": 5
           }
         }
       },
@@ -141,30 +160,152 @@
     "vc_finder": {
       "type": "vc-finder",
       "blocks": {
-        "bp_knee": { "type": "filter_option", "settings": { "filter_group": "body_part", "label": "Knee" } },
-        "bp_ankle": { "type": "filter_option", "settings": { "filter_group": "body_part", "label": "Ankle" } },
-        "bp_hand": { "type": "filter_option", "settings": { "filter_group": "body_part", "label": "Hand" } },
-        "bp_foot": { "type": "filter_option", "settings": { "filter_group": "body_part", "label": "Foot" } },
-        "co_arthritis": { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Osteoarthritis" } },
-        "co_postsurgery": { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Post-Surgery" } },
-        "co_swelling": { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Swelling" } },
-        "co_stiffness": { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Stiffness" } },
-        "co_daily": { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Daily Wear" } },
-        "co_sports": { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Sports Recovery" } },
-        "ac_walking": { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Walking" } },
-        "ac_standing": { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Standing All Day" } },
-        "ac_sleep": { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Sleep" } },
-        "ac_travel": { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Travel" } },
-        "ac_sports": { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Sports" } },
-        "se_mild": { "type": "filter_option", "settings": { "filter_group": "severity", "label": "Mild" } },
-        "se_moderate": { "type": "filter_option", "settings": { "filter_group": "severity", "label": "Moderate" } },
-        "se_severe": { "type": "filter_option", "settings": { "filter_group": "severity", "label": "Severe" } }
+        "bp_knee": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "body_part",
+            "label": "Knee"
+          }
+        },
+        "bp_ankle": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "body_part",
+            "label": "Ankle"
+          }
+        },
+        "bp_hand": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "body_part",
+            "label": "Hand"
+          }
+        },
+        "bp_foot": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "body_part",
+            "label": "Foot"
+          }
+        },
+        "co_arthritis": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "concern",
+            "label": "Osteoarthritis"
+          }
+        },
+        "co_postsurgery": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "concern",
+            "label": "Post-Surgery"
+          }
+        },
+        "co_swelling": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "concern",
+            "label": "Swelling"
+          }
+        },
+        "co_stiffness": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "concern",
+            "label": "Stiffness"
+          }
+        },
+        "co_daily": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "concern",
+            "label": "Daily Wear"
+          }
+        },
+        "co_sports": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "concern",
+            "label": "Sports Recovery"
+          }
+        },
+        "ac_walking": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "activity",
+            "label": "Walking"
+          }
+        },
+        "ac_standing": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "activity",
+            "label": "Standing All Day"
+          }
+        },
+        "ac_sleep": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "activity",
+            "label": "Sleep"
+          }
+        },
+        "ac_travel": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "activity",
+            "label": "Travel"
+          }
+        },
+        "ac_sports": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "activity",
+            "label": "Sports"
+          }
+        },
+        "se_mild": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "severity",
+            "label": "Mild"
+          }
+        },
+        "se_moderate": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "severity",
+            "label": "Moderate"
+          }
+        },
+        "se_severe": {
+          "type": "filter_option",
+          "settings": {
+            "filter_group": "severity",
+            "label": "Severe"
+          }
+        }
       },
       "block_order": [
-        "bp_knee", "bp_ankle", "bp_hand", "bp_foot",
-        "co_arthritis", "co_postsurgery", "co_swelling", "co_stiffness", "co_daily", "co_sports",
-        "ac_walking", "ac_standing", "ac_sleep", "ac_travel", "ac_sports",
-        "se_mild", "se_moderate", "se_severe"
+        "bp_knee",
+        "bp_ankle",
+        "bp_hand",
+        "bp_foot",
+        "co_arthritis",
+        "co_postsurgery",
+        "co_swelling",
+        "co_stiffness",
+        "co_daily",
+        "co_sports",
+        "ac_walking",
+        "ac_standing",
+        "ac_sleep",
+        "ac_travel",
+        "ac_sports",
+        "se_mild",
+        "se_moderate",
+        "se_severe"
       ],
       "settings": {
         "heading": "Find Your Compression",
@@ -183,25 +324,29 @@
         "tile_knee": {
           "type": "tile",
           "settings": {
-            "title": "Knee"
+            "title": "Knee",
+            "link": ""
           }
         },
         "tile_ankle": {
           "type": "tile",
           "settings": {
-            "title": "Ankle"
+            "title": "Ankle",
+            "link": ""
           }
         },
         "tile_hand": {
           "type": "tile",
           "settings": {
-            "title": "Hand"
+            "title": "Hand",
+            "link": ""
           }
         },
         "tile_foot": {
           "type": "tile",
           "settings": {
-            "title": "Foot"
+            "title": "Foot",
+            "link": ""
           }
         }
       },
@@ -218,9 +363,24 @@
     "vc_comparison": {
       "type": "vc-comparison",
       "blocks": {
-        "col_1": { "type": "product_column" },
-        "col_2": { "type": "product_column" },
-        "col_3": { "type": "product_column" },
+        "col_1": {
+          "type": "product_column",
+          "settings": {
+            "product": ""
+          }
+        },
+        "col_2": {
+          "type": "product_column",
+          "settings": {
+            "product": ""
+          }
+        },
+        "col_3": {
+          "type": "product_column",
+          "settings": {
+            "product": ""
+          }
+        },
         "row_walking": {
           "type": "feature_row",
           "settings": {
@@ -268,8 +428,14 @@
         }
       },
       "block_order": [
-        "col_1", "col_2", "col_3",
-        "row_walking", "row_recovery", "row_daily", "row_sport", "row_travel"
+        "col_1",
+        "col_2",
+        "col_3",
+        "row_walking",
+        "row_recovery",
+        "row_daily",
+        "row_sport",
+        "row_travel"
       ],
       "settings": {
         "heading": "Find Your Perfect Fit",
