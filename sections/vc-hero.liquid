@@ -125,8 +125,10 @@
   }
 
   #VcHero-{{ section.id }} .vc-hero__cta[aria-disabled='true'] {
-    opacity: 0.5;
+    background-color: rgba(var(--color-foreground), 0.12);
+    color: rgba(var(--color-foreground), 0.5);
     cursor: not-allowed;
+    pointer-events: none;
   }
 
   #VcHero-{{ section.id }} .vc-hero__features {

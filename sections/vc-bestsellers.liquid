@@ -251,8 +251,10 @@
   }
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__cta[aria-disabled='true'] {
-    opacity: 0.5;
+    background-color: rgba(var(--color-foreground), 0.12);
+    color: rgba(var(--color-foreground), 0.5);
     cursor: not-allowed;
+    pointer-events: none;
   }
 
   @media screen and (min-width: 750px) {

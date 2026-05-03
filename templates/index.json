@@ -49,7 +49,7 @@
         "headline": "Lasting relief, all-day comfort",
         "subheadline": "Engineered for those who refuse to slow down",
         "cta_label": "SHOP COMPRESSION →",
-        "cta_link": ""
+        "cta_link": "shopify://collections/all"
       }
     },
     "vc_bestsellers": {
@@ -90,9 +90,9 @@
         "heading": "Bestsellers",
         "subheading": "",
         "top_link_label": "SHOP ALL",
-        "top_link_url": "",
+        "top_link_url": "shopify://collections/all",
         "bottom_cta_label": "SHOP ALL",
-        "bottom_cta_url": ""
+        "bottom_cta_url": "shopify://collections/all"
       }
     },
     "vc_mission": {
