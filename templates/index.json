@@ -52,7 +52,9 @@
         "headline": "Lasting relief, all-day comfort",
         "subheadline": "Engineered for those who refuse to slow down",
         "cta_label": "SHOP COMPRESSION →",
-        "cta_link": "shopify://collections/all"
+        "cta_link": "shopify://collections/all",
+        "desktop_image": "shopify://shop_images/Homepage_Image_-_Spring_Relief_Sale_32026_1.webp",
+        "mobile_image": "shopify://shop_images/Homepage_Image_-_Spring_Relief_Sale_32026_1.webp"
       }
     },
     "vc_bestsellers": {
@@ -61,7 +63,7 @@
         "card_knee": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "test-knee-sleeve",
             "eyebrow": "Knee",
             "custom_name": "",
             "review_count": 1247,
