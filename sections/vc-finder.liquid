@@ -1,0 +1,340 @@
+{%- liquid
+  assign body_part_blocks = section.blocks | where: 'type', 'filter_option' | where: 'settings.filter_group', 'body_part'
+  assign concern_blocks = section.blocks | where: 'type', 'filter_option' | where: 'settings.filter_group', 'concern'
+  assign activity_blocks = section.blocks | where: 'type', 'filter_option' | where: 'settings.filter_group', 'activity'
+  assign severity_blocks = section.blocks | where: 'type', 'filter_option' | where: 'settings.filter_group', 'severity'
+-%}
+
+{%- style -%}
+  #VcFinder-{{ section.id }} {
+    padding: 56px 0;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    text-align: center;
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__heading {
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    color: rgb(var(--color-foreground));
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__subheading {
+    font-family: var(--font-body-family);
+    color: rgba(var(--color-foreground), 0.7);
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 16px 0 0;
+    max-width: 560px;
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__form {
+    width: 100%;
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: left;
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__label {
+    font-family: var(--font-body-family);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__select {
+    width: 100%;
+    background-color: #FFFFFF;
+    color: rgb(var(--color-foreground));
+    border: 1px solid rgba(var(--color-foreground), 0.15);
+    border-radius: 4px;
+    padding: 14px 40px 14px 16px;
+    font-family: var(--font-body-family);
+    font-size: 15px;
+    line-height: 1.2;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1L6 6L11 1' stroke='%231A1A1A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__select:hover {
+    border-color: rgba(var(--color-foreground), 0.35);
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__select:focus-visible {
+    outline: 2px solid rgb(var(--color-button));
+    outline-offset: 2px;
+    border-color: rgb(var(--color-button));
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 18px 36px;
+    border: 0;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 24px;
+    transition: filter 0.15s ease;
+    cursor: pointer;
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__cta:hover {
+    filter: brightness(0.92);
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__cta:focus-visible {
+    outline: 2px solid rgb(var(--color-button));
+    outline-offset: 3px;
+  }
+
+  #VcFinder-{{ section.id }} .vc-finder__cta[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media screen and (min-width: 750px) {
+    #VcFinder-{{ section.id }} {
+      padding: 80px 0;
+    }
+
+    #VcFinder-{{ section.id }} .vc-finder__form {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      max-width: 1100px;
+    }
+
+    #VcFinder-{{ section.id }} .vc-finder__cta {
+      grid-column: 1 / -1;
+      width: auto;
+      justify-self: center;
+      padding: 18px 56px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="vc-finder" id="VcFinder-{{ section.id }}">
+  <div class="vc-finder__inner page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="vc-finder__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="vc-finder__subheading">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+
+    <form class="vc-finder__form" role="search" aria-label="Compression finder">
+      <div class="vc-finder__field">
+        <label class="vc-finder__label" for="VcFinder-{{ section.id }}-body-part">{{ section.settings.body_part_label | escape }}</label>
+        <select class="vc-finder__select" id="VcFinder-{{ section.id }}-body-part" name="body_part">
+          <option value="">Any</option>
+          {%- for block in body_part_blocks -%}
+            <option value="{{ block.settings.label | handle }}">{{ block.settings.label | escape }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+
+      <div class="vc-finder__field">
+        <label class="vc-finder__label" for="VcFinder-{{ section.id }}-concern">{{ section.settings.concern_label | escape }}</label>
+        <select class="vc-finder__select" id="VcFinder-{{ section.id }}-concern" name="concern">
+          <option value="">Any</option>
+          {%- for block in concern_blocks -%}
+            <option value="{{ block.settings.label | handle }}">{{ block.settings.label | escape }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+
+      <div class="vc-finder__field">
+        <label class="vc-finder__label" for="VcFinder-{{ section.id }}-activity">{{ section.settings.activity_label | escape }}</label>
+        <select class="vc-finder__select" id="VcFinder-{{ section.id }}-activity" name="activity">
+          <option value="">Any</option>
+          {%- for block in activity_blocks -%}
+            <option value="{{ block.settings.label | handle }}">{{ block.settings.label | escape }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+
+      <div class="vc-finder__field">
+        <label class="vc-finder__label" for="VcFinder-{{ section.id }}-severity">{{ section.settings.severity_label | escape }}</label>
+        <select class="vc-finder__select" id="VcFinder-{{ section.id }}-severity" name="severity">
+          <option value="">Any</option>
+          {%- for block in severity_blocks -%}
+            <option value="{{ block.settings.label | handle }}">{{ block.settings.label | escape }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+
+      {%- if section.settings.cta_label != blank -%}
+        <a
+          class="vc-finder__cta"
+          {% if section.settings.cta_url == blank %}
+            role="link" aria-disabled="true"
+          {% else %}
+            href="{{ section.settings.cta_url }}"
+          {% endif %}
+        >
+          {{- section.settings.cta_label | escape -}}
+        </a>
+      {%- endif -%}
+    </form>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VC Compression Finder",
+  "tag": "section",
+  "max_blocks": 30,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find Your Compression"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Tell us where it hurts. We will recommend what fits your life."
+    },
+    {
+      "type": "header",
+      "content": "Filter labels"
+    },
+    {
+      "type": "text",
+      "id": "body_part_label",
+      "label": "Body part label",
+      "default": "Body part"
+    },
+    {
+      "type": "text",
+      "id": "concern_label",
+      "label": "Concern label",
+      "default": "Concern"
+    },
+    {
+      "type": "text",
+      "id": "activity_label",
+      "label": "Activity label",
+      "default": "Activity"
+    },
+    {
+      "type": "text",
+      "id": "severity_label",
+      "label": "Severity label",
+      "default": "Severity"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Find My Compression"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button URL",
+      "default": "/collections/all"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter_option",
+      "name": "Filter option",
+      "settings": [
+        {
+          "type": "select",
+          "id": "filter_group",
+          "label": "Filter group",
+          "options": [
+            { "value": "body_part", "label": "Body part" },
+            { "value": "concern", "label": "Concern" },
+            { "value": "activity", "label": "Activity" },
+            { "value": "severity", "label": "Severity" }
+          ],
+          "default": "body_part"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Option label",
+          "default": "Option"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Compression Finder",
+      "blocks": [
+        { "type": "filter_option", "settings": { "filter_group": "body_part", "label": "Knee" } },
+        { "type": "filter_option", "settings": { "filter_group": "body_part", "label": "Ankle" } },
+        { "type": "filter_option", "settings": { "filter_group": "body_part", "label": "Hand" } },
+        { "type": "filter_option", "settings": { "filter_group": "body_part", "label": "Foot" } },
+
+        { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Osteoarthritis" } },
+        { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Post-Surgery" } },
+        { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Swelling" } },
+        { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Stiffness" } },
+        { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Daily Wear" } },
+        { "type": "filter_option", "settings": { "filter_group": "concern", "label": "Sports Recovery" } },
+
+        { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Walking" } },
+        { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Standing All Day" } },
+        { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Sleep" } },
+        { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Travel" } },
+        { "type": "filter_option", "settings": { "filter_group": "activity", "label": "Sports" } },
+
+        { "type": "filter_option", "settings": { "filter_group": "severity", "label": "Mild" } },
+        { "type": "filter_option", "settings": { "filter_group": "severity", "label": "Moderate" } },
+        { "type": "filter_option", "settings": { "filter_group": "severity", "label": "Severe" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
