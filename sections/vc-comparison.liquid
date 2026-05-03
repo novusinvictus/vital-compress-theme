@@ -133,25 +133,25 @@
     filter: brightness(0.92);
   }
 
-  /* Check / dash icons */
-  #VcComparison-{{ section.id }} .vc-check {
-    width: 20px;
-    height: 20px;
-    color: rgb(var(--color-button));
+  /* 5-segment progress bar */
+  #VcComparison-{{ section.id }} .vc-bar {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 2px;
+    width: 100%;
+    max-width: 110px;
   }
 
-  #VcComparison-{{ section.id }} .vc-dash {
-    color: rgba(var(--color-foreground), 0.3);
-    font-size: 18px;
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
+  #VcComparison-{{ section.id }} .vc-bar__seg {
+    flex: 1;
+    min-width: 12px;
+    height: 6px;
+    border-radius: 1px;
+    background-color: rgba(var(--color-foreground), 0.1);
+  }
+
+  #VcComparison-{{ section.id }} .vc-bar__seg--filled {
+    background-color: rgb(var(--color-button));
   }
 
   /* Desktop table */
@@ -252,10 +252,10 @@
   }
 {%- endstyle -%}
 
-{%- capture check_svg -%}
-  <span class="vc-check" aria-label="Yes"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>
-{%- endcapture -%}
-{%- assign dash_svg = '<span class="vc-dash" aria-label="No">—</span>' -%}
+{%- comment -%}
+  Reusable progress bar snippet rendered inline.
+  Pass `score` (0-5) via assign before invoking via capture/include.
+{%- endcomment -%}
 
 <div class="vc-comparison" id="VcComparison-{{ section.id }}">
   <div class="vc-comparison__inner page-width">
@@ -307,10 +307,18 @@
             <tr {{ row.shopify_attributes }}>
               <td>{{ row.settings.label | escape }}</td>
               {%- for col_index in (1..product_columns.size) -%}
-                {%- assign field_id = 'col_' | append: col_index | append: '_active' -%}
-                {%- assign is_active = row.settings[field_id] -%}
+                {%- assign field_id = 'col_' | append: col_index | append: '_score' -%}
+                {%- assign score = row.settings[field_id] | default: 0 -%}
+                {%- assign empty_count = 5 | minus: score -%}
                 <td>
-                  {%- if is_active -%}{{ check_svg }}{%- else -%}{{ dash_svg }}{%- endif -%}
+                  <span class="vc-bar" role="img" aria-label="{{ score }} out of 5">
+                    {%- if score > 0 -%}
+                      {%- for i in (1..score) -%}<span class="vc-bar__seg vc-bar__seg--filled"></span>{%- endfor -%}
+                    {%- endif -%}
+                    {%- if empty_count > 0 -%}
+                      {%- for i in (1..empty_count) -%}<span class="vc-bar__seg"></span>{%- endfor -%}
+                    {%- endif -%}
+                  </span>
                 </td>
               {%- endfor -%}
             </tr>
@@ -364,11 +372,19 @@
             </div>
             <ul class="vc-card-mobile__features">
               {%- for row in feature_rows -%}
-                {%- assign field_id = 'col_' | append: col_index | append: '_active' -%}
-                {%- assign is_active = row.settings[field_id] -%}
+                {%- assign field_id = 'col_' | append: col_index | append: '_score' -%}
+                {%- assign score = row.settings[field_id] | default: 0 -%}
+                {%- assign empty_count = 5 | minus: score -%}
                 <li>
                   <span>{{ row.settings.label | escape }}</span>
-                  {%- if is_active -%}{{ check_svg }}{%- else -%}{{ dash_svg }}{%- endif -%}
+                  <span class="vc-bar" role="img" aria-label="{{ score }} out of 5">
+                    {%- if score > 0 -%}
+                      {%- for i in (1..score) -%}<span class="vc-bar__seg vc-bar__seg--filled"></span>{%- endfor -%}
+                    {%- endif -%}
+                    {%- if empty_count > 0 -%}
+                      {%- for i in (1..empty_count) -%}<span class="vc-bar__seg"></span>{%- endfor -%}
+                    {%- endif -%}
+                  </span>
                 </li>
               {%- endfor -%}
             </ul>
@@ -435,22 +451,31 @@
           "default": "Feature"
         },
         {
-          "type": "checkbox",
-          "id": "col_1_active",
-          "label": "Active for column 1",
-          "default": true
+          "type": "range",
+          "id": "col_1_score",
+          "label": "Score for column 1",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 5
         },
         {
-          "type": "checkbox",
-          "id": "col_2_active",
-          "label": "Active for column 2",
-          "default": true
+          "type": "range",
+          "id": "col_2_score",
+          "label": "Score for column 2",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 4
         },
         {
-          "type": "checkbox",
-          "id": "col_3_active",
-          "label": "Active for column 3",
-          "default": true
+          "type": "range",
+          "id": "col_3_score",
+          "label": "Score for column 3",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 3
         }
       ]
     }
@@ -462,11 +487,11 @@
         { "type": "product_column" },
         { "type": "product_column" },
         { "type": "product_column" },
-        { "type": "feature_row", "settings": { "label": "Walking comfort", "col_1_active": true, "col_2_active": true, "col_3_active": true } },
-        { "type": "feature_row", "settings": { "label": "Post-surgery recovery", "col_1_active": true, "col_2_active": true, "col_3_active": false } },
-        { "type": "feature_row", "settings": { "label": "All-day wear", "col_1_active": true, "col_2_active": true, "col_3_active": true } },
-        { "type": "feature_row", "settings": { "label": "Sport activities", "col_1_active": true, "col_2_active": false, "col_3_active": false } },
-        { "type": "feature_row", "settings": { "label": "Travel-friendly", "col_1_active": true, "col_2_active": true, "col_3_active": true } }
+        { "type": "feature_row", "settings": { "label": "Walking comfort", "col_1_score": 5, "col_2_score": 5, "col_3_score": 5 } },
+        { "type": "feature_row", "settings": { "label": "Post-surgery recovery", "col_1_score": 5, "col_2_score": 4, "col_3_score": 3 } },
+        { "type": "feature_row", "settings": { "label": "All-day wear", "col_1_score": 5, "col_2_score": 5, "col_3_score": 5 } },
+        { "type": "feature_row", "settings": { "label": "Sport activities", "col_1_score": 4, "col_2_score": 5, "col_3_score": 4 } },
+        { "type": "feature_row", "settings": { "label": "Travel-friendly", "col_1_score": 4, "col_2_score": 4, "col_3_score": 5 } }
       ]
     }
   ]
