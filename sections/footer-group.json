@@ -1,39 +1,48 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "vc_footer": {
+    "vc_footer_wfnqEf": {
       "type": "vc-footer",
       "blocks": {
-        "col_shop": {
+        "link_column_BFGiwQ": {
           "type": "link_column",
           "settings": {
             "heading": "Shop",
-            "menu": "footer"
+            "menu": ""
           }
         },
-        "col_help": {
+        "link_column_egiF9a": {
           "type": "link_column",
           "settings": {
             "heading": "Help",
-            "menu": "footer"
+            "menu": ""
           }
         },
-        "col_company": {
+        "link_column_T3N3Bz": {
           "type": "link_column",
           "settings": {
             "heading": "Company",
-            "menu": "footer"
+            "menu": ""
           }
         },
-        "social_instagram": {
+        "social_Eriiie": {
           "type": "social",
           "settings": {
             "platform": "instagram",
             "url": ""
           }
         },
-        "social_facebook": {
+        "social_7FtWa8": {
           "type": "social",
           "settings": {
             "platform": "facebook",
@@ -42,23 +51,72 @@
         }
       },
       "block_order": [
-        "col_shop",
-        "col_help",
-        "col_company",
-        "social_instagram",
-        "social_facebook"
+        "link_column_BFGiwQ",
+        "link_column_egiF9a",
+        "link_column_T3N3Bz",
+        "social_Eriiie",
+        "social_7FtWa8"
       ],
+      "name": "VC Footer",
       "settings": {
         "color_scheme": "scheme-4",
         "tagline": "Premium bamboo compression for lasting relief",
+        "brand_statement": "",
         "newsletter_heading": "Stay updated",
         "newsletter_copy": "Get 10% off your first order plus expert tips on managing joint comfort.",
         "copyright_text": "Vital Compress. All rights reserved.",
         "show_payment_icons": true
       }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "footer-0": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick links",
+            "menu": "footer"
+          }
+        },
+        "footer-1": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Info",
+            "menu": "footer"
+          }
+        },
+        "footer-2": {
+          "type": "text",
+          "settings": {
+            "heading": "Our mission",
+            "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "footer-0",
+        "footer-1",
+        "footer-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-1",
+        "newsletter_enable": true,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "payment_enable": true,
+        "show_policy": false,
+        "margin_top": 48,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
-    "vc_footer"
+    "vc_footer_wfnqEf",
+    "footer"
   ]
 }
