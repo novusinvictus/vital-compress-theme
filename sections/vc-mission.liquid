@@ -1,7 +1,7 @@
 {%- style -%}
   #VcMission-{{ section.id }} {
-    padding: var(--vc-section-py) 0;
-    background-color: rgb(var(--color-background));
+    padding: 48px 0;
+    background-color: #F8FAF9;
     color: rgb(var(--color-foreground));
   }
 
@@ -9,14 +9,15 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 24px;
-    align-items: stretch;
+    align-items: start;
   }
 
   #VcMission-{{ section.id }} .vc-mission__media {
+    position: relative;
     aspect-ratio: 1 / 1;
     border-radius: 8px;
     overflow: hidden;
-    background-color: rgba(var(--color-foreground), 0.04);
+    background-color: #F3F4F6;
   }
 
   #VcMission-{{ section.id }} .vc-mission__media-image {
@@ -29,65 +30,77 @@
   #VcMission-{{ section.id }} .vc-mission__media-placeholder {
     width: 100%;
     height: 100%;
-    background-color: rgba(var(--color-foreground), 0.04);
+    background-color: #F3F4F6;
   }
 
   #VcMission-{{ section.id }} .vc-mission__content {
     background-color: #FFFFFF;
-    border-radius: 8px;
-    padding: clamp(24px, 5vw, 48px);
-    display: flex;
-    flex-direction: column;
+    border-radius: 6px;
+    padding: 24px;
+    color: #000000;
+    height: 100%;
+  }
+
+  #VcMission-{{ section.id }} .vc-mission__header {
+    margin-bottom: 24px;
   }
 
   #VcMission-{{ section.id }} .vc-mission__heading {
     font-family: var(--font-heading-family);
     font-style: var(--font-heading-style);
-    font-weight: var(--font-heading-weight);
+    font-weight: 600;
     color: #000000;
-    font-size: clamp(24px, 3vw, 30px);
-    line-height: 1.2;
-    margin: 0 0 16px;
+    font-size: 24px;
+    line-height: 1.25;
+    margin: 0 0 8px;
   }
 
   #VcMission-{{ section.id }} .vc-mission__body {
     font-family: var(--font-body-family);
     color: #000000;
     font-size: 16px;
-    line-height: 1.6;
-    margin: 0 0 32px;
+    line-height: 1.625;
+    margin: 0;
   }
 
   #VcMission-{{ section.id }} .vc-mission__features {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    margin: 0;
+    margin: 0 0 24px;
     padding: 0;
     list-style: none;
   }
 
   #VcMission-{{ section.id }} .vc-mission__feature {
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
+    align-items: center;
+    gap: 12px;
+    max-width: 32rem;
+  }
+
+  #VcMission-{{ section.id }} .vc-mission__icon-wrap {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
   }
 
   #VcMission-{{ section.id }} .vc-mission__icon {
-    width: 56px;
-    height: 56px;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     display: block;
-    flex-shrink: 0;
   }
 
   #VcMission-{{ section.id }} .vc-mission__icon-placeholder {
-    width: 56px;
-    height: 56px;
+    width: 100%;
+    height: 100%;
     background-color: rgba(var(--color-foreground), 0.06);
-    border-radius: 999px;
+    border-radius: 8px;
     display: block;
-    flex-shrink: 0;
   }
 
   #VcMission-{{ section.id }} .vc-mission__feature-text {
@@ -108,14 +121,22 @@
     font-family: var(--font-body-family);
     color: #000000;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.625;
     margin: 0;
   }
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 1024px) {
     #VcMission-{{ section.id }} .vc-mission__inner {
       grid-template-columns: 1fr 1fr;
       gap: 24px;
+    }
+
+    #VcMission-{{ section.id }} .vc-mission__content {
+      padding: 32px;
+    }
+
+    #VcMission-{{ section.id }} .vc-mission__heading {
+      font-size: 30px;
     }
   }
 {%- endstyle -%}
@@ -140,12 +161,16 @@
     </div>
 
     <div class="vc-mission__content">
-      {%- if section.settings.heading != blank -%}
-        <h2 class="vc-mission__heading">{{ section.settings.heading | escape }}</h2>
-      {%- endif -%}
+      {%- if section.settings.heading != blank or section.settings.body != blank -%}
+        <div class="vc-mission__header">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="vc-mission__heading">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
 
-      {%- if section.settings.body != blank -%}
-        <p class="vc-mission__body">{{ section.settings.body | escape | newline_to_br }}</p>
+          {%- if section.settings.body != blank -%}
+            <p class="vc-mission__body">{{ section.settings.body | escape | newline_to_br }}</p>
+          {%- endif -%}
+        </div>
       {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
@@ -153,20 +178,22 @@
           {%- for block in section.blocks -%}
             {%- if block.type == 'feature' -%}
               <li class="vc-mission__feature" {{ block.shopify_attributes }}>
-                {%- if block.settings.icon != blank -%}
-                  {{
-                    block.settings.icon
-                    | image_url: width: 168
-                    | image_tag:
-                      widths: '56, 112, 168',
-                      sizes: '56px',
-                      loading: 'lazy',
-                      alt: block.settings.icon.alt | default: block.settings.title | default: '',
-                      class: 'vc-mission__icon'
-                  }}
-                {%- else -%}
-                  <span class="vc-mission__icon-placeholder" aria-hidden="true"></span>
-                {%- endif -%}
+                <div class="vc-mission__icon-wrap">
+                  {%- if block.settings.icon != blank -%}
+                    {{
+                      block.settings.icon
+                      | image_url: width: 240
+                      | image_tag:
+                        widths: '80, 160, 240',
+                        sizes: '80px',
+                        loading: 'lazy',
+                        alt: block.settings.icon.alt | default: block.settings.title | default: '',
+                        class: 'vc-mission__icon'
+                    }}
+                  {%- else -%}
+                    <span class="vc-mission__icon-placeholder" aria-hidden="true"></span>
+                  {%- endif -%}
+                </div>
                 <div class="vc-mission__feature-text">
                   {%- if block.settings.title != blank -%}
                     <h3 class="vc-mission__title">{{ block.settings.title | escape }}</h3>
@@ -220,7 +247,7 @@
         {
           "type": "image_picker",
           "id": "icon",
-          "label": "Icon (64×64 recommended)"
+          "label": "Icon (80×80 recommended, transparent PNG)"
         },
         {
           "type": "text",
