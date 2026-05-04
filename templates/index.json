@@ -262,22 +262,20 @@
           "type": "platform",
           "settings": {
             "platform_name": "Facebook",
-            "rating": 4.6,
-            "review_count": "1,847"
+            "rating": 4.6
           }
         },
         "platform_google": {
           "type": "platform",
           "settings": {
             "platform_name": "Google",
-            "rating": 4.8,
-            "review_count": "2,394"
+            "rating": 4.8
           }
         }
       },
       "block_order": ["platform_facebook", "platform_google"],
       "settings": {
-        "heading": "Trusted by thousands across Australia"
+        "heading": "Improving over 50,000+ lives with Vital Compress sleeves"
       }
     },
     "vc_help": {
