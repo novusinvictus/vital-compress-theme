@@ -80,8 +80,7 @@
             "product": "test-knee-sleeve",
             "eyebrow": "Knee",
             "custom_name": "",
-            "review_count": 1247,
-            "star_rating": 5
+            "review_count": 1247
           }
         },
         "card_ankle": {
@@ -90,8 +89,7 @@
             "product": "",
             "eyebrow": "Ankle",
             "custom_name": "",
-            "review_count": 0,
-            "star_rating": 5
+            "review_count": 0
           }
         },
         "card_hands": {
@@ -100,8 +98,7 @@
             "product": "",
             "eyebrow": "Hands",
             "custom_name": "",
-            "review_count": 0,
-            "star_rating": 5
+            "review_count": 0
           }
         },
         "card_feet": {
@@ -110,8 +107,7 @@
             "product": "",
             "eyebrow": "Feet",
             "custom_name": "",
-            "review_count": 0,
-            "star_rating": 5
+            "review_count": 0
           }
         }
       },

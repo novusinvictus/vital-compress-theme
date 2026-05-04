@@ -369,7 +369,7 @@
 
   {%- if review_count > 1 -%}
     <div class="vc-cr__inner page-width">
-      <ul class="vc-cr__dots" role="tablist" aria-label="Review pagination">
+      <ul class="vc-cr__dots" role="list" aria-label="Review pagination">
         {%- for block in review_blocks -%}
           <li>
             <button
@@ -377,7 +377,7 @@
               class="vc-cr__dot{% if forloop.first %} is-active{% endif %}"
               data-vc-cr-dot
               data-index="{{ forloop.index0 }}"
-              aria-label="Go to review {{ forloop.index }}"
+              aria-label="Go to review {{ forloop.index }} of {{ review_count }}"
             ></button>
           </li>
         {%- endfor -%}

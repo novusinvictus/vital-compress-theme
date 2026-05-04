@@ -91,7 +91,7 @@
     border-color: var(--vc-primary-dark);
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 750px) {
     #VcImageBanner-{{ section.id }} .vc-ib__media {
       height: {{ section.settings.height_desktop }}px;
     }
@@ -118,10 +118,16 @@
         {%- endif -%}
         {%- if section.settings.image != blank and section.settings.image_mobile != blank -%}
           <picture>
-            <source media="(min-width: 768px)" srcset="{{ section.settings.image | image_url: width: 2400 }}">
+            <source
+              media="(min-width: 750px)"
+              srcset="{{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1800 }} 1800w, {{ section.settings.image | image_url: width: 2400 }} 2400w, {{ section.settings.image | image_url: width: 3000 }} 3000w"
+              sizes="100vw"
+            >
             <img
               class="vc-ib__image"
               src="{{ section.settings.image_mobile | image_url: width: 1200 }}"
+              srcset="{{ section.settings.image_mobile | image_url: width: 600 }} 600w, {{ section.settings.image_mobile | image_url: width: 900 }} 900w, {{ section.settings.image_mobile | image_url: width: 1200 }} 1200w, {{ section.settings.image_mobile | image_url: width: 1500 }} 1500w"
+              sizes="100vw"
               alt="{{ section.settings.heading | escape }}"
               loading="eager"
               width="{{ section.settings.image_mobile.width }}"

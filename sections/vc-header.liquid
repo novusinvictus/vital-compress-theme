@@ -195,7 +195,7 @@
     font-size: 14px;
     color: rgb(var(--color-foreground));
     background-color: #FFFFFF;
-    border: 1px solid #6B7280;
+    border: 1px solid rgba(var(--color-foreground), 0.3);
     border-radius: 6px;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
     -webkit-appearance: none;
@@ -211,7 +211,7 @@
   }
 
   #VcHeader-{{ section.id }} .vc-h__search-input::placeholder {
-    color: #9CA3AF;
+    color: rgba(var(--color-foreground), 0.5);
   }
 
   #VcHeader-{{ section.id }} .vc-h__search-input:focus {
@@ -395,6 +395,7 @@
           class="vc-h__icon-btn vc-h__search-toggle"
           aria-label="Open search"
           aria-controls="VcSearchPanel-{{ section.id }}"
+          aria-expanded="false"
           data-vc-search-toggle
         >
           <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -501,7 +502,7 @@
     </div>
   {%- endif -%}
 
-  <div class="vc-h__drawer-overlay" id="VcDrawerOverlay-{{ section.id }}" data-vc-drawer-overlay aria-hidden="true"></div>
+  <div class="vc-h__drawer-overlay" id="VcDrawerOverlay-{{ section.id }}" aria-hidden="true"></div>
   <aside
     class="vc-h__drawer"
     id="VcDrawer-{{ section.id }}"

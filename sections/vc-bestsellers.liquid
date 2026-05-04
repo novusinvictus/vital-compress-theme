@@ -341,6 +341,9 @@
                 {%- endif -%}
               </div>
               <div class="vc-card__body">
+                {%- if block.settings.eyebrow != blank -%}
+                  <p class="vc-card__eyebrow">{{ block.settings.eyebrow | escape }}</p>
+                {%- endif -%}
                 {%- if block.settings.review_count > 0 -%}
                   <p class="vc-card__rating">
                     <span class="vc-card__stars" aria-hidden="true">
@@ -460,15 +463,6 @@
           "label": "Review count",
           "info": "Set to 0 to hide the rating row.",
           "default": 0
-        },
-        {
-          "type": "range",
-          "id": "star_rating",
-          "label": "Star rating",
-          "min": 1,
-          "max": 5,
-          "step": 0.5,
-          "default": 5
         }
       ]
     }
