@@ -99,6 +99,11 @@
     gap: 16px;
   }
 
+  /* Promo pill (desktop only) */
+  #VcHeader-{{ section.id }} .vc-h__promo-pill {
+    display: none;
+  }
+
   #VcHeader-{{ section.id }} .vc-h__icon-btn {
     background: none;
     border: 0;
@@ -125,13 +130,14 @@
 
   #VcHeader-{{ section.id }} .vc-h__cart-badge {
     position: absolute;
-    top: -2px;
-    right: -2px;
-    min-width: 16px;
-    height: 16px;
-    padding: 0 4px;
+    top: 2px;
+    right: 2px;
+    min-width: 14px;
+    width: 14px;
+    height: 14px;
+    padding: 0;
     border-radius: 999px;
-    background-color: rgb(var(--color-button));
+    background-color: var(--vc-primary);
     color: rgb(var(--color-button-text));
     font-size: 10px;
     font-weight: 600;
@@ -178,13 +184,13 @@
 
   #VcHeader-{{ section.id }} .vc-h__search-input {
     width: 100%;
-    padding: 10px 12px 10px 40px;
+    padding: 8px 16px 8px 40px;
     font-family: var(--font-body-family);
     font-size: 14px;
     color: rgb(var(--color-foreground));
-    background-color: rgba(var(--color-foreground), 0.05);
-    border: 1px solid rgba(var(--color-foreground), 0.15);
-    border-radius: 999px;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(var(--color-foreground), 0.25);
+    border-radius: 6px;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
@@ -318,11 +324,29 @@
       width: 200px;
     }
 
-    {%- if section.settings.enable_country_selector -%}
-      #VcHeader-{{ section.id }} .vc-h__flag {
-        display: block;
-      }
-    {%- endif -%}
+    #VcHeader-{{ section.id }} .vc-h__flag {
+      display: block;
+    }
+
+    #VcHeader-{{ section.id }} .vc-h__promo-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 16px;
+      border: 1.5px solid var(--vc-primary);
+      border-radius: 999px;
+      color: var(--vc-primary);
+      font-family: var(--font-body-family);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    #VcHeader-{{ section.id }} .vc-h__promo-pill:hover {
+      background-color: var(--vc-primary);
+      color: #FFFFFF;
+    }
   }
 {%- endstyle -%}
 
@@ -359,6 +383,15 @@
         <span class="vc-h__logo-text">{{ section.settings.logo_text | default: 'Vital Compress' | escape }}</span>
       {%- endif -%}
     </a>
+
+    {%- if section.settings.promo_pill_text != blank -%}
+      <a
+        class="vc-h__promo-pill"
+        {% if section.settings.promo_pill_link != blank %}href="{{ section.settings.promo_pill_link }}"{% endif %}
+      >
+        {{ section.settings.promo_pill_text | escape }}
+      </a>
+    {%- endif -%}
 
     {%- if has_menu -%}
       <ul class="vc-h__nav" role="list">
@@ -413,27 +446,25 @@
         {%- endif -%}
       </a>
 
-      {%- if section.settings.enable_country_selector -%}
-        <span class="vc-h__flag" aria-label="Australia" title="Australia">
-          <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" width="24" height="18">
-            <rect width="60" height="30" fill="#012169"/>
-            <g>
-              <path d="M0,0 L30,15 M30,0 L0,15" stroke="#fff" stroke-width="3"/>
-              <path d="M0,0 L30,15 M30,0 L0,15" stroke="#C8102E" stroke-width="2"/>
-              <path d="M15,0 v15 M0,7.5 h30" stroke="#fff" stroke-width="5"/>
-              <path d="M15,0 v15 M0,7.5 h30" stroke="#C8102E" stroke-width="3"/>
-            </g>
-            <g fill="#fff">
-              <path d="M22.5 19l1.2 3.7h3.9l-3.2 2.3 1.2 3.7-3.1-2.3-3.1 2.3 1.2-3.7-3.2-2.3h3.9z"/>
-              <circle cx="42" cy="8" r="1.5"/>
-              <circle cx="50" cy="14" r="1.5"/>
-              <circle cx="48" cy="22" r="1.5"/>
-              <circle cx="40" cy="20" r="1.5"/>
-              <circle cx="44" cy="14" r="1"/>
-            </g>
-          </svg>
-        </span>
-      {%- endif -%}
+      <span class="vc-h__flag" aria-label="Australia" title="Australia">
+        <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" width="24" height="18">
+          <rect width="60" height="30" fill="#012169"/>
+          <g>
+            <path d="M0,0 L30,15 M30,0 L0,15" stroke="#fff" stroke-width="3"/>
+            <path d="M0,0 L30,15 M30,0 L0,15" stroke="#C8102E" stroke-width="2"/>
+            <path d="M15,0 v15 M0,7.5 h30" stroke="#fff" stroke-width="5"/>
+            <path d="M15,0 v15 M0,7.5 h30" stroke="#C8102E" stroke-width="3"/>
+          </g>
+          <g fill="#fff">
+            <path d="M22.5 19l1.2 3.7h3.9l-3.2 2.3 1.2 3.7-3.1-2.3-3.1 2.3 1.2-3.7-3.2-2.3h3.9z"/>
+            <circle cx="42" cy="8" r="1.5"/>
+            <circle cx="50" cy="14" r="1.5"/>
+            <circle cx="48" cy="22" r="1.5"/>
+            <circle cx="40" cy="20" r="1.5"/>
+            <circle cx="44" cy="14" r="1"/>
+          </g>
+        </svg>
+      </span>
 
       <a class="vc-h__icon-btn" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" aria-label="{% if customer %}Account{% else %}Sign in{% endif %}">
         <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -598,10 +629,19 @@
       "default": true
     },
     {
-      "type": "checkbox",
-      "id": "enable_country_selector",
-      "label": "Show country flag (AU)",
-      "default": false
+      "type": "header",
+      "content": "Promo pill"
+    },
+    {
+      "type": "text",
+      "id": "promo_pill_text",
+      "label": "Promo pill text",
+      "info": "Shown next to the logo on desktop. Leave blank to hide."
+    },
+    {
+      "type": "url",
+      "id": "promo_pill_link",
+      "label": "Promo pill link"
     }
   ],
   "presets": [
@@ -609,8 +649,7 @@
       "name": "VC Header",
       "settings": {
         "logo_text": "VITAL COMPRESS",
-        "enable_search": true,
-        "enable_country_selector": false
+        "enable_search": true
       }
     }
   ]
