@@ -278,6 +278,17 @@
         "heading": "Improving over 50,000+ lives with Vital Compress sleeves"
       }
     },
+    "vc_image_banner": {
+      "type": "vc-image-banner",
+      "settings": {
+        "heading": "Designed for life beyond limits",
+        "cta_label": "SHOP BESTSELLERS",
+        "cta_url": "shopify://collections/all",
+        "height_mobile": 400,
+        "height_desktop": 480,
+        "overlay_opacity": 30
+      }
+    },
     "vc_help": {
       "type": "vc-help",
       "settings": {
@@ -299,6 +310,7 @@
     "vc_customer_reviews",
     "vc_collections",
     "vc_trust_ratings",
+    "vc_image_banner",
     "vc_help"
   ]
 }

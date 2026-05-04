@@ -1,0 +1,253 @@
+{%- style -%}
+  #VcImageBanner-{{ section.id }} {
+    padding: 0;
+    background-color: var(--vc-background);
+  }
+
+  #VcImageBanner-{{ section.id }} .vc-ib__inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0;
+  }
+
+  #VcImageBanner-{{ section.id }} .vc-ib__media {
+    position: relative;
+    width: 100%;
+    height: {{ section.settings.height_mobile }}px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  #VcImageBanner-{{ section.id }} .vc-ib__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #VcImageBanner-{{ section.id }} .vc-ib__placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  #VcImageBanner-{{ section.id }} .vc-ib__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }}) 0%,
+      rgba(0, 0, 0, 0) 60%
+    );
+  }
+
+  #VcImageBanner-{{ section.id }} .vc-ib__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px;
+    color: #FFFFFF;
+    z-index: 1;
+  }
+
+  #VcImageBanner-{{ section.id }} .vc-ib__heading {
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: 600;
+    color: #FFFFFF;
+    font-size: 28px;
+    line-height: 1.15;
+    margin: 0 0 24px;
+    max-width: 480px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  #VcImageBanner-{{ section.id }} .vc-ib__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--vc-background);
+    color: #000000;
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    border: 1px solid var(--vc-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  #VcImageBanner-{{ section.id }} .vc-ib__cta:hover {
+    background-color: var(--vc-primary);
+    color: #FFFFFF;
+  }
+
+  @media screen and (min-width: 768px) {
+    #VcImageBanner-{{ section.id }} .vc-ib__media {
+      height: {{ section.settings.height_desktop }}px;
+    }
+
+    #VcImageBanner-{{ section.id }} .vc-ib__content {
+      padding: 48px;
+    }
+
+    #VcImageBanner-{{ section.id }} .vc-ib__heading {
+      font-size: 48px;
+      margin-bottom: 32px;
+      max-width: 600px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="vc-image-banner scroll-trigger animate--fade-in" id="VcImageBanner-{{ section.id }}">
+  <div class="vc-ib__inner">
+    <div class="vc-ib__media">
+      {%- if section.settings.image_mobile != blank or section.settings.image != blank -%}
+        {%- assign banner_image = section.settings.image -%}
+        {%- if section.settings.image_mobile != blank and section.settings.image == blank -%}
+          {%- assign banner_image = section.settings.image_mobile -%}
+        {%- endif -%}
+        {%- if section.settings.image != blank and section.settings.image_mobile != blank -%}
+          <picture>
+            <source media="(min-width: 768px)" srcset="{{ section.settings.image | image_url: width: 2400 }}">
+            <img
+              class="vc-ib__image"
+              src="{{ section.settings.image_mobile | image_url: width: 1200 }}"
+              alt="{{ section.settings.heading | escape }}"
+              loading="eager"
+              width="{{ section.settings.image_mobile.width }}"
+              height="{{ section.settings.image_mobile.height }}"
+            >
+          </picture>
+        {%- else -%}
+          <img
+            class="vc-ib__image"
+            src="{{ banner_image | image_url: width: 2400 }}"
+            srcset="{{ banner_image | image_url: width: 800 }} 800w, {{ banner_image | image_url: width: 1200 }} 1200w, {{ banner_image | image_url: width: 1800 }} 1800w, {{ banner_image | image_url: width: 2400 }} 2400w"
+            sizes="100vw"
+            alt="{{ section.settings.heading | escape }}"
+            loading="eager"
+            width="{{ banner_image.width }}"
+            height="{{ banner_image.height }}"
+          >
+        {%- endif -%}
+      {%- else -%}
+        <div class="vc-ib__placeholder" aria-hidden="true"></div>
+      {%- endif -%}
+
+      {%- if section.settings.overlay_opacity > 0 -%}
+        <div class="vc-ib__overlay" aria-hidden="true"></div>
+      {%- endif -%}
+
+      <div class="vc-ib__content">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="vc-ib__heading">{{ section.settings.heading | escape | newline_to_br }}</h2>
+        {%- endif -%}
+        {%- if section.settings.cta_label != blank -%}
+          <a class="vc-ib__cta" {% if section.settings.cta_url != blank %}href="{{ section.settings.cta_url }}"{% endif %}>
+            {{ section.settings.cta_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VC Image Banner",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop image",
+      "info": "Wide image recommended (e.g. 2400×800)."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image (optional)",
+      "info": "Falls back to desktop image. Square or portrait works well."
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "label": "Mobile height",
+      "min": 300,
+      "max": 600,
+      "step": 20,
+      "default": 400,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "label": "Desktop height",
+      "min": 300,
+      "max": 700,
+      "step": 20,
+      "default": 480,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Image overlay (left)",
+      "info": "Darkens the left side for text readability.",
+      "min": 0,
+      "max": 70,
+      "step": 5,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Designed for life beyond limits"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "SHOP BESTSELLERS"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Image Banner",
+      "settings": {
+        "heading": "Designed for life beyond limits",
+        "cta_label": "SHOP BESTSELLERS"
+      }
+    }
+  ]
+}
+{% endschema %}
