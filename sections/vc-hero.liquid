@@ -10,7 +10,10 @@
   assign hero_alt_fallback = section.settings.headline | default: 'Hero image'
 
   assign has_image = false
-  if section.settings.desktop_image != blank or section.settings.mobile_image != blank
+  if section.settings.desktop_image != blank
+    assign has_image = true
+  endif
+  if section.settings.mobile_image != blank
     assign has_image = true
   endif
 -%}
