@@ -7,7 +7,7 @@
 
 {%- style -%}
   #VcBestsellers-{{ section.id }} {
-    padding: 56px 0;
+    padding: var(--vc-section-py) 0;
     background-color: rgb(var(--color-background));
     color: rgb(var(--color-foreground));
   }
@@ -273,10 +273,6 @@
   }
 
   @media screen and (min-width: 750px) {
-    #VcBestsellers-{{ section.id }} {
-      padding: 80px 0;
-    }
-
     #VcBestsellers-{{ section.id }} .vc-bestsellers__header {
       flex-direction: row;
       justify-content: space-between;

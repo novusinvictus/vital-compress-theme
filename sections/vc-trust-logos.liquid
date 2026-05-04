@@ -4,7 +4,7 @@
 
 {%- style -%}
   #VcTrustLogos-{{ section.id }} {
-    padding: 40px 0;
+    padding: var(--vc-section-py-sm) 0;
     background-color: var(--vc-soft-tint);
     color: rgb(var(--color-foreground));
   }
@@ -80,10 +80,6 @@
   }
 
   @media screen and (min-width: 750px) {
-    #VcTrustLogos-{{ section.id }} {
-      padding: 56px 0;
-    }
-
     #VcTrustLogos-{{ section.id }} .vc-trust-logos__inner {
       flex-direction: row;
       align-items: stretch;

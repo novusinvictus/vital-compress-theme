@@ -40,6 +40,11 @@
   /* Container */
   --vc-container-max: 1280px;
 
+  /* Section padding (vertical, fluid via clamp) */
+  --vc-section-py: clamp(3.5rem, 8vw, 5rem);          /* 56 to 80px, standard sections */
+  --vc-section-py-sm: clamp(2.5rem, 6vw, 3.5rem);     /* 40 to 56px, compact tinted bands */
+  --vc-section-py-lg: clamp(4rem, 10vw, 6rem);        /* 64 to 96px, premium content */
+
   /* Focus ring */
   --vc-focus-ring-color: var(--vc-primary);
   --vc-focus-ring-width: 2px;

@@ -4,7 +4,7 @@
 
 {%- style -%}
   #VcCustomerReviews-{{ section.id }} {
-    padding: 64px 0;
+    padding: var(--vc-section-py-lg) 0;
     background-color: rgb(var(--color-background));
     color: rgb(var(--color-foreground));
   }
@@ -202,10 +202,6 @@
   }
 
   @media screen and (min-width: 990px) {
-    #VcCustomerReviews-{{ section.id }} {
-      padding: 96px 0;
-    }
-
     #VcCustomerReviews-{{ section.id }} .vc-cr__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 24px;
