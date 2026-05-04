@@ -20,10 +20,10 @@
   #VcBestsellers-{{ section.id }} .vc-bestsellers__header {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
     gap: 16px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__heading {
@@ -43,34 +43,6 @@
     line-height: 1.5;
     margin: 0;
     max-width: 540px;
-  }
-
-  #VcBestsellers-{{ section.id }} .vc-bestsellers__top-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-heading-family);
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0;
-    color: #000000;
-    text-decoration: none;
-    background-color: transparent;
-    border: 1px solid #000000;
-    border-radius: 6px;
-    padding: 8px 20px;
-    white-space: nowrap;
-    transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
-  }
-
-  #VcBestsellers-{{ section.id }} .vc-bestsellers__top-link:hover {
-    color: var(--vc-primary);
-    border-color: var(--vc-primary);
-  }
-
-  #VcBestsellers-{{ section.id }} .vc-bestsellers__top-link:focus-visible {
-    outline: 2px solid var(--vc-primary);
-    outline-offset: 3px;
   }
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__grid {
@@ -252,28 +224,30 @@
   }
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__cta {
-    display: inline-block;
-    background-color: rgb(var(--color-button));
-    color: rgb(var(--color-button-text));
-    font-family: var(--font-body-family);
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 18px 36px;
-    border: 0;
-    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: #000000;
+    font-family: var(--font-heading-family);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+    padding: 12px 32px;
+    border: 1px solid #000000;
+    border-radius: 6px;
     text-decoration: none;
-    transition: filter 0.15s ease;
+    white-space: nowrap;
+    transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
     cursor: pointer;
   }
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__cta:hover {
-    filter: brightness(0.92);
+    color: var(--vc-primary);
+    border-color: var(--vc-primary);
   }
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__cta:active {
-    filter: brightness(0.85);
     transform: translateY(1px);
   }
 
@@ -283,27 +257,16 @@
   }
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__cta[aria-disabled='true'] {
-    background-color: rgba(var(--color-foreground), 0.12);
-    color: rgba(var(--color-foreground), 0.5);
+    color: rgba(var(--color-foreground), 0.4);
+    border-color: rgba(var(--color-foreground), 0.2);
     cursor: not-allowed;
     pointer-events: none;
   }
 
   @media screen and (min-width: 750px) {
     #VcBestsellers-{{ section.id }} .vc-bestsellers__header {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: end;
-      text-align: left;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    #VcBestsellers-{{ section.id }} .vc-bestsellers__header-text {
-      display: flex;
-      flex-direction: column;
       gap: 12px;
-      max-width: 720px;
+      margin-bottom: 32px;
     }
 
     #VcBestsellers-{{ section.id }} .vc-bestsellers__grid {
@@ -340,25 +303,11 @@
 <div class="vc-bestsellers scroll-trigger animate--fade-in" id="VcBestsellers-{{ section.id }}">
   <div class="vc-bestsellers__inner page-width">
     <div class="vc-bestsellers__header">
-      <div class="vc-bestsellers__header-text">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="vc-bestsellers__heading">{{ section.settings.heading | escape }}</h2>
-        {%- endif -%}
-        {%- if has_subheading -%}
-          <p class="vc-bestsellers__subheading">{{ section.settings.subheading | escape }}</p>
-        {%- endif -%}
-      </div>
-      {%- if section.settings.top_link_label != blank -%}
-        <a
-          class="vc-bestsellers__top-link"
-          {% if section.settings.top_link_url == blank %}
-            role="link" aria-disabled="true"
-          {% else %}
-            href="{{ section.settings.top_link_url }}"
-          {% endif %}
-        >
-          {{- section.settings.top_link_label | escape -}}
-        </a>
+      {%- if section.settings.heading != blank -%}
+        <h2 class="vc-bestsellers__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if has_subheading -%}
+        <p class="vc-bestsellers__subheading">{{ section.settings.subheading | escape }}</p>
       {%- endif -%}
     </div>
 
@@ -463,21 +412,6 @@
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading"
-    },
-    {
-      "type": "header",
-      "content": "Top link"
-    },
-    {
-      "type": "text",
-      "id": "top_link_label",
-      "label": "Top link label",
-      "default": "SHOP ALL"
-    },
-    {
-      "type": "url",
-      "id": "top_link_url",
-      "label": "Top link URL"
     },
     {
       "type": "header",

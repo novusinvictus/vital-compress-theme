@@ -124,8 +124,6 @@
       "settings": {
         "heading": "Bestsellers",
         "subheading": "",
-        "top_link_label": "SHOP ALL",
-        "top_link_url": "shopify://collections/all",
         "bottom_cta_label": "SHOP ALL",
         "bottom_cta_url": "shopify://collections/all"
       }
