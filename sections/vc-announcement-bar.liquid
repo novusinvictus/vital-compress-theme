@@ -2,7 +2,13 @@
   assign announcements = section.blocks | where: 'type', 'announcement'
   assign count = announcements.size
   assign rotation = section.settings.rotation_seconds | default: 4
-  assign total_cycle = count | times: rotation
+
+  if count > 1
+    assign slot_count = count | plus: 1
+    assign cycle_seconds = slot_count | times: rotation
+    assign slot_pct = 100 | divided_by: slot_count
+    assign first_block = announcements | first
+  endif
 -%}
 
 {%- style -%}
@@ -39,64 +45,58 @@
 
   #VcAnnouncementBar-{{ section.id }} .vc-ab__messages {
     grid-column: 2;
-    display: grid;
-    grid-template-columns: 1fr;
-    align-items: center;
-    justify-items: center;
-    text-align: center;
+    height: 1.3em;
+    overflow: hidden;
     min-width: 0;
     max-width: 100%;
+    position: relative;
+  }
+
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__messages-track {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 
   #VcAnnouncementBar-{{ section.id }} .vc-ab__message {
-    grid-row: 1;
-    grid-column: 1;
+    display: block;
+    flex-shrink: 0;
+    height: 1.3em;
+    line-height: 1.3em;
+    width: 100%;
     color: inherit;
     text-decoration: none;
     font-weight: 500;
+    text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
   }
-
-  {%- if count > 1 -%}
-  #VcAnnouncementBar-{{ section.id }} .vc-ab__message {
-    opacity: 0;
-    animation: vc-ab-cycle-{{ section.id }} {{ total_cycle }}s linear infinite;
-  }
-
-  {%- assign visible_pct = 100 | divided_by: count -%}
-  {%- assign hide_pct = visible_pct | plus: 1 -%}
-
-  @keyframes vc-ab-cycle-{{ section.id }} {
-    0% { opacity: 1; }
-    {{ visible_pct }}% { opacity: 1; }
-    {{ hide_pct }}% { opacity: 0; }
-    100% { opacity: 0; }
-  }
-
-  {%- for i in (1..count) -%}
-    {%- assign delay = i | minus: 1 | times: rotation -%}
-    #VcAnnouncementBar-{{ section.id }} .vc-ab__message:nth-child({{ i }}) {
-      animation-delay: {{ delay }}s;
-    }
-  {%- endfor -%}
-
-  @media (prefers-reduced-motion: reduce) {
-    #VcAnnouncementBar-{{ section.id }} .vc-ab__message {
-      animation: none;
-      opacity: 0;
-    }
-    #VcAnnouncementBar-{{ section.id }} .vc-ab__message:first-child {
-      opacity: 1;
-    }
-  }
-  {%- endif -%}
 
   #VcAnnouncementBar-{{ section.id }} .vc-ab__message[href]:hover {
     text-decoration: underline;
   }
+
+  {%- if count > 1 -%}
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__messages-track {
+    animation: vc-ab-roll-{{ section.id }} {{ cycle_seconds }}s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
+  @keyframes vc-ab-roll-{{ section.id }} {
+    {%- for i in (0..count) -%}
+      {%- assign hold_start = i | times: slot_pct -%}
+      {%- assign hold_end = i | plus: 1 | times: slot_pct | minus: 3 -%}
+      {%- assign translate = i | times: slot_pct -%}
+      {{ hold_start }}%, {{ hold_end }}% { transform: translateY(-{{ translate }}%); }
+    {%- endfor -%}
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #VcAnnouncementBar-{{ section.id }} .vc-ab__messages-track {
+      animation: none;
+    }
+  }
+  {%- endif -%}
 
   #VcAnnouncementBar-{{ section.id }} .vc-ab__links {
     grid-column: 3;
@@ -150,18 +150,31 @@
     <div class="vc-ab__spacer" aria-hidden="true"></div>
 
     {%- if count > 0 -%}
-      <div class="vc-ab__messages" role="region" aria-label="Announcements">
-        {%- for block in announcements -%}
-          {%- if block.settings.link != blank -%}
-            <a class="vc-ab__message" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
-              {{- block.settings.text | escape -}}
-            </a>
-          {%- else -%}
-            <span class="vc-ab__message" {{ block.shopify_attributes }}>
-              {{- block.settings.text | escape -}}
-            </span>
+      <div class="vc-ab__messages" role="region" aria-label="Announcements" aria-live="polite">
+        <div class="vc-ab__messages-track">
+          {%- for block in announcements -%}
+            {%- if block.settings.link != blank -%}
+              <a class="vc-ab__message" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+                {{- block.settings.text | escape -}}
+              </a>
+            {%- else -%}
+              <span class="vc-ab__message" {{ block.shopify_attributes }}>
+                {{- block.settings.text | escape -}}
+              </span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if count > 1 -%}
+            {%- if first_block.settings.link != blank -%}
+              <a class="vc-ab__message" href="{{ first_block.settings.link }}" aria-hidden="true" tabindex="-1">
+                {{- first_block.settings.text | escape -}}
+              </a>
+            {%- else -%}
+              <span class="vc-ab__message" aria-hidden="true">
+                {{- first_block.settings.text | escape -}}
+              </span>
+            {%- endif -%}
           {%- endif -%}
-        {%- endfor -%}
+        </div>
       </div>
     {%- endif -%}
 
