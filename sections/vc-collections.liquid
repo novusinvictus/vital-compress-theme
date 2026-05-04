@@ -41,6 +41,18 @@
     isolation: isolate;
   }
 
+  #VcCollections-{{ section.id }} .vc-tile--empty {
+    background-color: rgba(var(--color-button), 0.08);
+    color: rgb(var(--color-foreground));
+  }
+
+  #VcCollections-{{ section.id }} .vc-tile__placeholder {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(var(--color-button), 0.08);
+    z-index: 0;
+  }
+
   #VcCollections-{{ section.id }} .vc-tile__image {
     position: absolute;
     inset: 0;
@@ -71,6 +83,10 @@
     color: #FFFFFF;
     margin: 0;
     padding: 24px;
+  }
+
+  #VcCollections-{{ section.id }} .vc-tile--empty .vc-tile__title {
+    color: rgb(var(--color-foreground));
   }
 
   #VcCollections-{{ section.id }} .vc-tile:hover .vc-tile__image {
@@ -121,9 +137,11 @@
       <div class="vc-collections__grid">
         {%- for block in section.blocks -%}
           {%- if block.type == 'tile' -%}
+            {%- assign has_tile_image = false -%}
+            {%- if block.settings.image != blank -%}{%- assign has_tile_image = true -%}{%- endif -%}
             {%- assign tile_alt = block.settings.image.alt | default: block.settings.title | default: 'Collection tile' -%}
             <a
-              class="vc-tile"
+              class="vc-tile{% unless has_tile_image %} vc-tile--empty{% endunless %}"
               {% if block.settings.link == blank %}
                 role="link" aria-disabled="true"
               {% else %}
@@ -131,7 +149,7 @@
               {% endif %}
               {{ block.shopify_attributes }}
             >
-              {%- if block.settings.image != blank -%}
+              {%- if has_tile_image -%}
                 {{
                   block.settings.image
                   | image_url: width: 1200
@@ -142,10 +160,10 @@
                     alt: tile_alt,
                     class: 'vc-tile__image'
                 }}
+                <span class="vc-tile__overlay" aria-hidden="true"></span>
               {%- else -%}
-                {{ 'collection-1' | placeholder_svg_tag: 'vc-tile__image placeholder-svg' }}
+                <span class="vc-tile__placeholder" aria-hidden="true"></span>
               {%- endif -%}
-              <span class="vc-tile__overlay" aria-hidden="true"></span>
               {%- if block.settings.title != blank -%}
                 <h3 class="vc-tile__title">{{ block.settings.title | escape }}</h3>
               {%- endif -%}
