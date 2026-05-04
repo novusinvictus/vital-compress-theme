@@ -392,7 +392,6 @@
                 {%- endif -%}
               </div>
               <div class="vc-card__body">
-                <h3 class="vc-card__title">{{ card_name | escape }}</h3>
                 {%- if block.settings.review_count > 0 -%}
                   <p class="vc-card__rating">
                     <span class="vc-card__stars" aria-hidden="true">
@@ -401,6 +400,7 @@
                     <span>({{ block.settings.review_count }})</span>
                   </p>
                 {%- endif -%}
+                <h3 class="vc-card__title">{{ card_name | escape }}</h3>
                 <p class="vc-card__price">
                   <span class="vc-card__price-current">{{ product.price | money }}</span>
                   {%- if product.compare_at_price > product.price -%}
