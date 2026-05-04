@@ -173,6 +173,13 @@
         "body": "Vital Compress sleeves are made from premium bamboo charcoal fibre that breathes with you. Engineered with graduated medical-grade compression, they support tired joints without the bulk or pinch. Comfortable enough for all-day wear, trusted by physiotherapists and orthopaedic specialists across Australia."
       }
     },
+    "vc_specialists": {
+      "type": "vc-specialists",
+      "settings": {
+        "heading": "Physiotherapist-Tested & Recommended",
+        "body": "Inspired by clinical research and real-world testing, Vital Compress sleeves support healthy circulation, joint stability, and pain-free movement across daily activity. Trusted by physiotherapists and orthopaedic specialists for everyday wear and long-term support."
+      }
+    },
     "vc_customer_reviews": {
       "type": "vc-customer-reviews",
       "blocks": {
@@ -294,6 +301,7 @@
     "vc_trust_logos",
     "vc_bestsellers",
     "vc_mission",
+    "vc_specialists",
     "vc_customer_reviews",
     "vc_collections",
     "vc_trust_ratings",
