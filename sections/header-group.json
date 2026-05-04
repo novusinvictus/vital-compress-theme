@@ -103,7 +103,7 @@
         "logo_text": "VITAL COMPRESS",
         "menu": "main-menu",
         "enable_search": true,
-        "enable_country_selector": true
+        "enable_country_selector": false
       }
     }
   },
