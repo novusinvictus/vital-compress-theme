@@ -33,6 +33,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #FFFFFF;
+    padding: clamp(24px, 5vw, 48px);
+    border-radius: 8px;
   }
 
   #VcHero-{{ section.id }} .vc-hero__star-badge {
@@ -218,17 +221,18 @@
     #VcHero-{{ section.id }} .vc-hero__inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
+      gap: 16px;
+      align-items: stretch;
     }
 
     #VcHero-{{ section.id }} .vc-hero__content {
       align-items: flex-start;
       text-align: left;
+      justify-content: center;
+      padding: clamp(32px, 5vw, 64px);
     }
 
     #VcHero-{{ section.id }} .vc-hero__subheadline {
-      font-size: 18px;
       max-width: none;
     }
 
@@ -247,12 +251,12 @@
       margin-left: 0;
       margin-top: 0;
       aspect-ratio: 16 / 10;
-      border-radius: 12px;
+      border-radius: 8px;
     }
 
     #VcHero-{{ section.id }} .vc-hero__image,
     #VcHero-{{ section.id }} .vc-hero__image-placeholder {
-      border-radius: 12px;
+      border-radius: 8px;
     }
 
     #VcHero-{{ section.id }}.vc-hero--no-image {
