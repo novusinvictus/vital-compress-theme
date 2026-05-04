@@ -10,10 +10,7 @@
   assign hero_alt_fallback = section.settings.headline | default: 'Hero image'
 
   assign has_image = false
-  if section.settings.desktop_image != blank
-    assign has_image = true
-  endif
-  if section.settings.mobile_image != blank
+  if section.settings.desktop_image != blank or section.settings.mobile_image != blank
     assign has_image = true
   endif
 -%}
@@ -176,15 +173,21 @@
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-top: 64px;
-    line-height: 0;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+  }
+
+  #VcHero-{{ section.id }} .vc-hero__media picture {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
   #VcHero-{{ section.id }} .vc-hero__image,
   #VcHero-{{ section.id }} .vc-hero__image-placeholder {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
-    aspect-ratio: 4 / 5;
     object-fit: cover;
   }
 
@@ -206,7 +209,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 64px;
-      align-items: stretch;
+      align-items: center;
     }
 
     #VcHero-{{ section.id }} .vc-hero__content {
@@ -233,25 +236,12 @@
       width: 100%;
       margin-left: 0;
       margin-top: 0;
-      min-height: 600px;
-      height: 100%;
+      aspect-ratio: 4 / 3;
       border-radius: 12px;
-      overflow: hidden;
-    }
-
-    #VcHero-{{ section.id }} .vc-hero__media picture,
-    #VcHero-{{ section.id }} .vc-hero__media source {
-      display: block;
-      width: 100%;
-      height: 100%;
     }
 
     #VcHero-{{ section.id }} .vc-hero__image,
     #VcHero-{{ section.id }} .vc-hero__image-placeholder {
-      width: 100%;
-      height: 100%;
-      aspect-ratio: auto;
-      object-fit: cover;
       border-radius: 12px;
     }
 
@@ -282,7 +272,6 @@
   }
 {%- endstyle -%}
 
-<!-- VC Hero diagnostic: has_image={{ has_image }} | desktop_blank={% if section.settings.desktop_image == blank %}true{% else %}false{% endif %} | mobile_blank={% if section.settings.mobile_image == blank %}true{% else %}false{% endif %} | desktop_value=[{{ section.settings.desktop_image }}] | mobile_value=[{{ section.settings.mobile_image }}] -->
 <div class="vc-hero{% unless has_image %} vc-hero--no-image{% endunless %}" id="VcHero-{{ section.id }}">
   <div class="vc-hero__inner page-width">
     <div class="vc-hero__content">
