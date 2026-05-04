@@ -1,6 +1,7 @@
 :root {
   /* Vital Compress Brand Colors */
   --vc-primary: #1B4D5A;
+  --vc-primary-rgb: 27, 77, 90;
   --vc-primary-dark: #0F3640;
   --vc-accent: #C97B63;
   --vc-background: #F8FAF8;
@@ -13,6 +14,15 @@
   --vc-font-body: 'Poppins', sans-serif;
   --vc-font-weight-heading: 600;
   --vc-font-weight-body: 400;
+
+  /* Responsive type scale — body sized for 55-72 audience legibility */
+  --vc-font-size-body: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);          /* 16 → 17px */
+  --vc-font-size-small: clamp(0.875rem, 0.85rem + 0.125vw, 0.9375rem);    /* 14 → 15px */
+  --vc-font-size-h1: clamp(2rem, 1.5rem + 2.5vw, 3rem);                   /* 32 → 48px */
+  --vc-font-size-h2: clamp(1.5rem, 1.25rem + 1.25vw, 2.25rem);            /* 24 → 36px */
+  --vc-font-size-h3: clamp(1.125rem, 1rem + 0.625vw, 1.375rem);           /* 18 → 22px */
+  --vc-line-height-body: 1.55;
+  --vc-line-height-heading: 1.2;
 
   /* Spacing scale (8px base) */
   --vc-space-1: 8px;
@@ -29,6 +39,11 @@
 
   /* Container */
   --vc-container-max: 1280px;
+
+  /* Focus ring */
+  --vc-focus-ring-color: var(--vc-primary);
+  --vc-focus-ring-width: 2px;
+  --vc-focus-ring-offset: 3px;
 }
 
 /* Global brand application */
@@ -36,10 +51,33 @@ body {
   background-color: var(--vc-background);
   color: var(--vc-text-primary);
   font-family: var(--vc-font-body);
-  font-weight: var(--vc-font-body-weight);
+  font-weight: var(--vc-font-weight-body);
+  font-size: var(--vc-font-size-body);
+  line-height: var(--vc-line-height-body);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--vc-font-heading);
   font-weight: var(--vc-font-weight-heading);
+  line-height: var(--vc-line-height-heading);
+}
+
+/* Foundation focus ring for vc-* sections.
+   Per-section rules override where they exist — see each vc-*.liquid. */
+[class^="vc-"] :focus-visible,
+[class*=" vc-"] :focus-visible {
+  outline: var(--vc-focus-ring-width) solid var(--vc-focus-ring-color);
+  outline-offset: var(--vc-focus-ring-offset);
+}
+
+/* Respect user motion preference. Overrides per-section transitions/animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
