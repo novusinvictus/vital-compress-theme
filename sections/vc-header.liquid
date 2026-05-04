@@ -130,29 +130,40 @@
 
   #VcHeader-{{ section.id }} .vc-h__cart-badge {
     position: absolute;
-    top: 2px;
-    right: 2px;
-    min-width: 14px;
-    width: 14px;
-    height: 14px;
+    top: -2px;
+    right: -2px;
+    min-width: 13px;
+    width: 13px;
+    height: 13px;
     padding: 0;
     border-radius: 999px;
     background-color: var(--vc-primary);
-    color: rgb(var(--color-button-text));
+    color: #FFFFFF;
     font-size: 10px;
     font-weight: 600;
-    line-height: 16px;
+    line-height: 13px;
     text-align: center;
     box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   #VcHeader-{{ section.id }} .vc-h__flag {
-    display: none;
-    width: 24px;
-    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    width: 19px;
+    height: 14px;
     border-radius: 2px;
     overflow: hidden;
     flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__flag svg {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 
   /* Mobile search panel */
@@ -189,19 +200,29 @@
     font-size: 14px;
     color: rgb(var(--color-foreground));
     background-color: #FFFFFF;
-    border: 1px solid rgba(var(--color-foreground), 0.25);
+    border: 1px solid #6B7280;
     border-radius: 6px;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__search-input::-webkit-search-decoration,
+  #VcHeader-{{ section.id }} .vc-h__search-input::-webkit-search-cancel-button,
+  #VcHeader-{{ section.id }} .vc-h__search-input::-webkit-search-results-button,
+  #VcHeader-{{ section.id }} .vc-h__search-input::-webkit-search-results-decoration {
+    -webkit-appearance: none;
   }
 
   #VcHeader-{{ section.id }} .vc-h__search-input::placeholder {
-    color: rgba(var(--color-foreground), 0.5);
+    color: #9CA3AF;
   }
 
   #VcHeader-{{ section.id }} .vc-h__search-input:focus {
     outline: none;
     border-color: var(--vc-primary);
-    box-shadow: 0 0 0 3px rgba(var(--vc-primary-rgb), 0.15);
+    box-shadow: 0 0 0 2px rgba(var(--vc-primary-rgb), 0.2);
   }
 
   /* Drawer */
@@ -321,11 +342,7 @@
 
     #VcHeader-{{ section.id }} .vc-h__search-form {
       display: block;
-      width: 200px;
-    }
-
-    #VcHeader-{{ section.id }} .vc-h__flag {
-      display: block;
+      width: 192px;
     }
 
     #VcHeader-{{ section.id }} .vc-h__promo-pill {
@@ -437,9 +454,9 @@
 
       <a class="vc-h__icon-btn" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items">
         <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <path d="M16 10a4 4 0 0 1-8 0"></path>
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
         </svg>
         {%- if cart.item_count > 0 -%}
           <span class="vc-h__cart-badge" aria-hidden="true">{{ cart.item_count }}</span>
@@ -468,8 +485,8 @@
 
       <a class="vc-h__icon-btn" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" aria-label="{% if customer %}Account{% else %}Sign in{% endif %}">
         <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
+          <path d="M16 15H8C5.79086 15 4 16.7909 4 19V21H20V19C20 16.7909 18.2091 15 16 15Z"></path>
+          <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"></path>
         </svg>
       </a>
     </div>
