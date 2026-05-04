@@ -219,9 +219,9 @@
   }
 
   #VcBestsellers-{{ section.id }} .vc-card__star {
-    width: 12px;
-    height: 12px;
-    fill: rgb(var(--color-button));
+    width: 14px;
+    height: 14px;
+    fill: #EBBF20;
     display: block;
   }
 
@@ -393,6 +393,14 @@
               </div>
               <div class="vc-card__body">
                 <h3 class="vc-card__title">{{ card_name | escape }}</h3>
+                {%- if block.settings.review_count > 0 -%}
+                  <p class="vc-card__rating">
+                    <span class="vc-card__stars" aria-hidden="true">
+                      {%- for i in (1..5) -%}{{ star_svg }}{%- endfor -%}
+                    </span>
+                    <span>({{ block.settings.review_count }})</span>
+                  </p>
+                {%- endif -%}
                 <p class="vc-card__price">
                   <span class="vc-card__price-current">{{ product.price | money }}</span>
                   {%- if product.compare_at_price > product.price -%}
@@ -538,25 +546,29 @@
         {
           "type": "product_card",
           "settings": {
-            "eyebrow": "Knee"
+            "eyebrow": "Knee",
+            "review_count": 412
           }
         },
         {
           "type": "product_card",
           "settings": {
-            "eyebrow": "Ankle"
+            "eyebrow": "Ankle",
+            "review_count": 287
           }
         },
         {
           "type": "product_card",
           "settings": {
-            "eyebrow": "Hands"
+            "eyebrow": "Hands",
+            "review_count": 198
           }
         },
         {
           "type": "product_card",
           "settings": {
-            "eyebrow": "Feet"
+            "eyebrow": "Feet",
+            "review_count": 351
           }
         }
       ]
