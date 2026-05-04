@@ -118,7 +118,9 @@
     border: 0;
     border-radius: 6px;
     text-decoration: none;
-    margin-top: 32px;
+    order: -1;
+    margin-top: 0;
+    margin-bottom: 24px;
     transition: filter 0.15s ease, box-shadow 0.15s ease;
     cursor: pointer;
   }
@@ -259,6 +261,12 @@
 
     #VcHero-{{ section.id }} .vc-hero__feature {
       align-items: center;
+    }
+
+    #VcHero-{{ section.id }} .vc-hero__cta {
+      order: 0;
+      margin-top: 32px;
+      margin-bottom: 0;
     }
 
     #VcHero-{{ section.id }} .vc-hero__media {
