@@ -15,7 +15,7 @@
   --vc-font-weight-heading: 600;
   --vc-font-weight-body: 400;
 
-  /* Responsive type scale — body sized for 55-72 audience legibility */
+  /* Responsive type scale: body sized for 55-72 audience legibility */
   --vc-font-size-body: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);          /* 16 → 17px */
   --vc-font-size-small: clamp(0.875rem, 0.85rem + 0.125vw, 0.9375rem);    /* 14 → 15px */
   --vc-font-size-h1: clamp(2rem, 1.5rem + 2.5vw, 3rem);                   /* 32 → 48px */
@@ -68,7 +68,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Foundation focus ring for vc-* sections.
-   Per-section rules override where they exist — see each vc-*.liquid. */
+   Per-section rules override where they exist; see each vc-*.liquid. */
 [class^="vc-"] :focus-visible,
 [class*=" vc-"] :focus-visible {
   outline: var(--vc-focus-ring-width) solid var(--vc-focus-ring-color);
