@@ -1,0 +1,590 @@
+{%- liquid
+  assign menu = section.settings.menu
+  assign has_menu = false
+  if menu != blank and menu.links.size > 0
+    assign has_menu = true
+  endif
+-%}
+
+{%- style -%}
+  #VcHeader-{{ section.id }} {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+    font-family: var(--font-body-family);
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 64px;
+    padding: 12px 16px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  /* Mobile menu toggle */
+  #VcHeader-{{ section.id }} .vc-h__menu-toggle {
+    background: none;
+    border: 0;
+    padding: 8px;
+    margin-left: -8px;
+    cursor: pointer;
+    color: rgb(var(--color-foreground));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__icon {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: block;
+  }
+
+  /* Logo */
+  #VcHeader-{{ section.id }} .vc-h__logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    color: rgb(var(--color-foreground));
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__logo-text {
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__logo-image {
+    max-height: 32px;
+    width: auto;
+    display: block;
+  }
+
+  /* Desktop nav (hidden on mobile) */
+  #VcHeader-{{ section.id }} .vc-h__nav {
+    display: none;
+  }
+
+  /* Right group */
+  #VcHeader-{{ section.id }} .vc-h__right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__icon-btn {
+    background: none;
+    border: 0;
+    padding: 4px;
+    cursor: pointer;
+    color: rgb(var(--color-foreground));
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__icon-btn:focus-visible {
+    outline: 2px solid rgb(var(--color-button));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Search desktop input is hidden on mobile - icon button shown instead */
+  #VcHeader-{{ section.id }} .vc-h__search-form {
+    display: none;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__cart-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background-color: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 16px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__flag {
+    display: none;
+    width: 24px;
+    height: 18px;
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* Mobile search panel */
+  #VcHeader-{{ section.id }} .vc-h__search-panel {
+    display: none;
+    border-top: 1px solid rgba(var(--color-foreground), 0.08);
+    padding: 12px 16px;
+    background-color: rgb(var(--color-background));
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__search-panel.is-open {
+    display: block;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__search-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: rgba(var(--color-foreground), 0.5);
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__search-input {
+    width: 100%;
+    padding: 10px 12px 10px 40px;
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    color: rgb(var(--color-foreground));
+    background-color: rgba(var(--color-foreground), 0.05);
+    border: 1px solid rgba(var(--color-foreground), 0.15);
+    border-radius: 999px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__search-input::placeholder {
+    color: rgba(var(--color-foreground), 0.5);
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__search-input:focus {
+    outline: none;
+    border-color: rgb(var(--color-button));
+    box-shadow: 0 0 0 3px rgba(var(--color-button), 0.15);
+  }
+
+  /* Drawer */
+  #VcHeader-{{ section.id }} .vc-h__drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 20;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__drawer-overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(80vw, 320px);
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 21;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.06);
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__drawer.is-open {
+    transform: translateX(0);
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__drawer-title {
+    font-family: var(--font-heading-family);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__drawer-nav {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__drawer-nav a {
+    display: block;
+    padding: 14px 16px;
+    color: rgb(var(--color-foreground));
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  #VcHeader-{{ section.id }} .vc-h__drawer-nav a:hover {
+    background-color: rgba(var(--color-foreground), 0.04);
+  }
+
+  /* Desktop overrides */
+  @media screen and (min-width: 990px) {
+    #VcHeader-{{ section.id }} .vc-h__inner {
+      gap: 32px;
+      min-height: 72px;
+    }
+
+    #VcHeader-{{ section.id }} .vc-h__menu-toggle,
+    #VcHeader-{{ section.id }} .vc-h__search-toggle {
+      display: none;
+    }
+
+    #VcHeader-{{ section.id }} .vc-h__logo {
+      flex: 0 0 auto;
+      justify-content: flex-start;
+    }
+
+    #VcHeader-{{ section.id }} .vc-h__nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex: 1;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #VcHeader-{{ section.id }} .vc-h__nav a {
+      color: rgb(var(--color-foreground));
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    #VcHeader-{{ section.id }} .vc-h__nav a:hover {
+      text-decoration: underline;
+    }
+
+    #VcHeader-{{ section.id }} .vc-h__search-form {
+      display: block;
+      width: 200px;
+    }
+
+    {%- if section.settings.enable_country_selector -%}
+      #VcHeader-{{ section.id }} .vc-h__flag {
+        display: block;
+      }
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+<header class="vc-header" id="VcHeader-{{ section.id }}">
+  <div class="vc-h__inner">
+    <button
+      type="button"
+      class="vc-h__menu-toggle"
+      aria-label="Open menu"
+      aria-controls="VcDrawer-{{ section.id }}"
+      data-vc-drawer-open
+    >
+      <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <a class="vc-h__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+      {%- if section.settings.logo_image != blank -%}
+        {%- assign logo_alt = section.settings.logo_image.alt | default: shop.name -%}
+        <img
+          class="vc-h__logo-image"
+          src="{{ section.settings.logo_image | image_url: width: 320 }}"
+          srcset="{{ section.settings.logo_image | image_url: width: 160 }} 160w, {{ section.settings.logo_image | image_url: width: 320 }} 320w"
+          sizes="160px"
+          width="{{ section.settings.logo_image.width | default: 320 }}"
+          height="{{ section.settings.logo_image.height | default: 64 }}"
+          alt="{{ logo_alt | escape }}"
+          loading="eager"
+        >
+      {%- else -%}
+        <span class="vc-h__logo-text">{{ section.settings.logo_text | default: 'Vital Compress' | escape }}</span>
+      {%- endif -%}
+    </a>
+
+    {%- if has_menu -%}
+      <ul class="vc-h__nav" role="list">
+        {%- for link in menu.links -%}
+          <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <ul class="vc-h__nav" role="list">
+        <li><a href="{{ routes.root_url }}">Home</a></li>
+        <li><a href="{{ routes.collections_url }}">Shop</a></li>
+      </ul>
+    {%- endif -%}
+
+    <div class="vc-h__right">
+      {%- if section.settings.enable_search -%}
+        <form action="{{ routes.search_url }}" method="get" role="search" class="vc-h__search-form">
+          <div class="vc-h__search-input-wrap">
+            <span class="vc-h__search-icon" aria-hidden="true">
+              <svg class="vc-h__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <input
+              type="search"
+              name="q"
+              class="vc-h__search-input"
+              placeholder="Search"
+              aria-label="Search"
+              autocomplete="off"
+            >
+          </div>
+        </form>
+
+        <button
+          type="button"
+          class="vc-h__icon-btn vc-h__search-toggle"
+          aria-label="Open search"
+          aria-controls="VcSearchPanel-{{ section.id }}"
+          data-vc-search-toggle
+        >
+          <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      {%- endif -%}
+
+      <a class="vc-h__icon-btn" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items">
+        <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="vc-h__cart-badge" aria-hidden="true">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+
+      {%- if section.settings.enable_country_selector -%}
+        <span class="vc-h__flag" aria-label="Australia" title="Australia">
+          <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" width="24" height="18">
+            <rect width="60" height="30" fill="#012169"/>
+            <g>
+              <path d="M0,0 L30,15 M30,0 L0,15" stroke="#fff" stroke-width="3"/>
+              <path d="M0,0 L30,15 M30,0 L0,15" stroke="#C8102E" stroke-width="2"/>
+              <path d="M15,0 v15 M0,7.5 h30" stroke="#fff" stroke-width="5"/>
+              <path d="M15,0 v15 M0,7.5 h30" stroke="#C8102E" stroke-width="3"/>
+            </g>
+            <g fill="#fff">
+              <path d="M22.5 19l1.2 3.7h3.9l-3.2 2.3 1.2 3.7-3.1-2.3-3.1 2.3 1.2-3.7-3.2-2.3h3.9z"/>
+              <circle cx="42" cy="8" r="1.5"/>
+              <circle cx="50" cy="14" r="1.5"/>
+              <circle cx="48" cy="22" r="1.5"/>
+              <circle cx="40" cy="20" r="1.5"/>
+              <circle cx="44" cy="14" r="1"/>
+            </g>
+          </svg>
+        </span>
+      {%- endif -%}
+
+      <a class="vc-h__icon-btn" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" aria-label="{% if customer %}Account{% else %}Sign in{% endif %}">
+        <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  {%- if section.settings.enable_search -%}
+    <div class="vc-h__search-panel" id="VcSearchPanel-{{ section.id }}" role="search">
+      <form action="{{ routes.search_url }}" method="get">
+        <div class="vc-h__search-input-wrap">
+          <span class="vc-h__search-icon" aria-hidden="true">
+            <svg class="vc-h__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </span>
+          <input
+            type="search"
+            name="q"
+            class="vc-h__search-input"
+            placeholder="Search products"
+            aria-label="Search products"
+            autocomplete="off"
+          >
+        </div>
+      </form>
+    </div>
+  {%- endif -%}
+</header>
+
+<div class="vc-h__drawer-overlay" id="VcDrawerOverlay-{{ section.id }}" data-vc-drawer-overlay aria-hidden="true"></div>
+<aside
+  class="vc-h__drawer"
+  id="VcDrawer-{{ section.id }}"
+  aria-label="Main menu"
+  aria-hidden="true"
+>
+  <div class="vc-h__drawer-header">
+    <p class="vc-h__drawer-title">Menu</p>
+    <button type="button" class="vc-h__icon-btn" data-vc-drawer-close aria-label="Close menu">
+      <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <ul class="vc-h__drawer-nav" role="list">
+    {%- if has_menu -%}
+      {%- for link in menu.links -%}
+        <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+      {%- endfor -%}
+    {%- else -%}
+      <li><a href="{{ routes.root_url }}">Home</a></li>
+      <li><a href="{{ routes.collections_url }}">Shop</a></li>
+    {%- endif -%}
+  </ul>
+</aside>
+
+<script>
+  (function () {
+    var root = document.getElementById('VcHeader-{{ section.id }}');
+    if (!root) return;
+    var drawer = document.getElementById('VcDrawer-{{ section.id }}');
+    var overlay = document.getElementById('VcDrawerOverlay-{{ section.id }}');
+    var openBtn = root.querySelector('[data-vc-drawer-open]');
+    var closeBtn = drawer && drawer.querySelector('[data-vc-drawer-close]');
+    var searchToggle = root.querySelector('[data-vc-search-toggle]');
+    var searchPanel = document.getElementById('VcSearchPanel-{{ section.id }}');
+
+    function openDrawer() {
+      if (!drawer || !overlay) return;
+      drawer.classList.add('is-open');
+      overlay.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      if (!drawer || !overlay) return;
+      drawer.classList.remove('is-open');
+      overlay.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    openBtn && openBtn.addEventListener('click', openDrawer);
+    closeBtn && closeBtn.addEventListener('click', closeDrawer);
+    overlay && overlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    if (searchToggle && searchPanel) {
+      searchToggle.addEventListener('click', function () {
+        var isOpen = searchPanel.classList.toggle('is-open');
+        searchToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        if (isOpen) {
+          var input = searchPanel.querySelector('input');
+          input && input.focus();
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VC Header",
+  "tag": "section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image (optional)",
+      "info": "Falls back to text logo if not set."
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "VITAL COMPRESS"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu",
+      "info": "Configure menus in Online Store > Navigation."
+    },
+    {
+      "type": "header",
+      "content": "Right side"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_search",
+      "label": "Enable search",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "Show country flag (AU)",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Header",
+      "settings": {
+        "logo_text": "VITAL COMPRESS",
+        "enable_search": true,
+        "enable_country_selector": true
+      }
+    }
+  ]
+}
+{% endschema %}
