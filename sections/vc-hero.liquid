@@ -39,13 +39,14 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: rgba(var(--color-foreground), 0.06);
+    background-color: #FFFFFF;
     color: rgb(var(--color-foreground));
     padding: 8px 16px;
     border-radius: 999px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
     font-family: var(--font-body-family);
     font-style: var(--font-body-style);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     margin: 0;
   }
@@ -60,7 +61,7 @@
   #VcHero-{{ section.id }} .vc-hero__star {
     width: 16px;
     height: 16px;
-    fill: rgb(var(--color-button));
+    fill: #EBBF20;
     display: block;
   }
 
@@ -402,7 +403,7 @@
       "type": "text",
       "id": "star_badge_text",
       "label": "Star badge text",
-      "default": "50,000+ customers in Australia"
+      "default": "50.000+ lives improved"
     },
     {
       "type": "range",
