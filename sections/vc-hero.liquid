@@ -20,7 +20,7 @@
     padding: 0 0 16px 0;
     background-color: rgb(var(--color-background));
     color: rgb(var(--color-foreground));
-    text-align: center;
+    text-align: left;
     overflow-x: clip;
   }
 
@@ -32,7 +32,7 @@
   #VcHero-{{ section.id }} .vc-hero__content {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     background-color: #FFFFFF;
     padding: clamp(24px, 5vw, 48px);
     border-radius: 8px;
@@ -106,7 +106,7 @@
   }
 
   #VcHero-{{ section.id }} .vc-hero__cta {
-    display: inline-block;
+    display: block;
     background-color: rgb(var(--color-button));
     color: rgb(var(--color-button-text));
     font-family: var(--font-heading-family);
@@ -114,11 +114,13 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.025em;
-    padding: 12px 24px;
+    padding: 14px 24px;
     border: 0;
     border-radius: 6px;
     text-decoration: none;
+    text-align: center;
     order: -1;
+    align-self: stretch;
     margin-top: 0;
     margin-bottom: 24px;
     transition: filter 0.15s ease, box-shadow 0.15s ease;
@@ -159,9 +161,9 @@
   #VcHero-{{ section.id }} .vc-hero__feature {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
-    text-align: center;
+    text-align: left;
   }
 
   #VcHero-{{ section.id }} .vc-hero__feature-icon-wrap {
@@ -261,10 +263,13 @@
 
     #VcHero-{{ section.id }} .vc-hero__feature {
       align-items: center;
+      text-align: center;
     }
 
     #VcHero-{{ section.id }} .vc-hero__cta {
+      display: inline-block;
       order: 0;
+      align-self: flex-start;
       margin-top: 32px;
       margin-bottom: 0;
     }
