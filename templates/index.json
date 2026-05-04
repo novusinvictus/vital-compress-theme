@@ -15,25 +15,25 @@
         "feature_qwpMQJ": {
           "type": "feature",
           "settings": {
-            "label": "Feature 1"
+            "label": "Bamboo Soft"
           }
         },
         "feature_QyEBVF": {
           "type": "feature",
           "settings": {
-            "label": "Feature 2"
+            "label": "Graduated Support"
           }
         },
         "feature_FxqXqG": {
           "type": "feature",
           "settings": {
-            "label": "Feature 3"
+            "label": "Secure Fit"
           }
         },
         "feature_9ertcm": {
           "type": "feature",
           "settings": {
-            "label": "Feature 4"
+            "label": "All-Day Wear"
           }
         }
       },
@@ -49,7 +49,7 @@
         "star_badge_text": "50.000+ lives improved",
         "star_count": 5,
         "badge_text": "",
-        "headline": "Lasting relief, all-day comfort",
+        "headline": "Comfort that keeps going.",
         "subheadline": "Engineered for those who refuse to slow down",
         "cta_label": "SHOP COMPRESSION →",
         "cta_link": "shopify://collections/all",
