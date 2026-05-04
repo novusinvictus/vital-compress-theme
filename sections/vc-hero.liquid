@@ -282,6 +282,7 @@
   }
 {%- endstyle -%}
 
+<!-- VC Hero diagnostic: has_image={{ has_image }} | desktop_blank={% if section.settings.desktop_image == blank %}true{% else %}false{% endif %} | mobile_blank={% if section.settings.mobile_image == blank %}true{% else %}false{% endif %} | desktop_value=[{{ section.settings.desktop_image }}] | mobile_value=[{{ section.settings.mobile_image }}] -->
 <div class="vc-hero{% unless has_image %} vc-hero--no-image{% endunless %}" id="VcHero-{{ section.id }}">
   <div class="vc-hero__inner page-width">
     <div class="vc-hero__content">
