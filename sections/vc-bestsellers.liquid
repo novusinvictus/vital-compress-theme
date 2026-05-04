@@ -107,10 +107,15 @@
 
   #VcBestsellers-{{ section.id }} .vc-card__image,
   #VcBestsellers-{{ section.id }} .vc-card__placeholder-svg {
+    display: block;
     width: 100%;
     height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: cover;
-    display: block;
+    object-position: center;
+    transform: none;
+    scale: none;
     transition: transform 0.3s ease;
   }
 
@@ -342,16 +347,18 @@
                   <span class="vc-card__badge">{{ discount_pct }}% OFF</span>
                 {%- endif -%}
                 {%- if product.featured_image != blank -%}
-                  {{
-                    product.featured_image
-                    | image_url: width: 800
-                    | image_tag:
-                      widths: '200, 400, 600, 800',
-                      sizes: '(min-width: 990px) 25vw, (min-width: 750px) 50vw, 50vw',
-                      loading: 'lazy',
-                      alt: product.featured_image.alt | default: card_name,
-                      class: 'vc-card__image'
-                  }}
+                  {%- assign card_img = product.featured_image -%}
+                  {%- assign card_img_alt = card_img.alt | default: card_name -%}
+                  <img
+                    class="vc-card__image"
+                    src="{{ card_img | image_url: width: 800 }}"
+                    srcset="{{ card_img | image_url: width: 200 }} 200w, {{ card_img | image_url: width: 400 }} 400w, {{ card_img | image_url: width: 600 }} 600w, {{ card_img | image_url: width: 800 }} 800w"
+                    sizes="(min-width: 990px) 25vw, (min-width: 750px) 50vw, 50vw"
+                    width="{{ card_img.width | default: 800 }}"
+                    height="{{ card_img.height | default: 800 }}"
+                    alt="{{ card_img_alt | escape }}"
+                    loading="lazy"
+                  >
                 {%- else -%}
                   {{ 'product-1' | placeholder_svg_tag: 'vc-card__placeholder-svg' }}
                 {%- endif -%}
