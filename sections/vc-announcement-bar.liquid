@@ -1,0 +1,262 @@
+{%- liquid
+  assign announcements = section.blocks | where: 'type', 'announcement'
+  assign count = announcements.size
+  assign rotation = section.settings.rotation_seconds | default: 4
+  assign total_cycle = count | times: rotation
+-%}
+
+{%- style -%}
+  #VcAnnouncementBar-{{ section.id }} {
+    background-color: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    font-family: var(--font-body-family);
+    font-size: 12px;
+    line-height: 1.3;
+    padding: 10px 16px;
+    min-height: 40px;
+    box-sizing: border-box;
+  }
+
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__spacer {
+    display: none;
+  }
+
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__messages {
+    grid-column: 2;
+    position: relative;
+    min-height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__message {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  {%- if count > 1 -%}
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__message {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: vc-ab-cycle-{{ section.id }} {{ total_cycle }}s linear infinite;
+  }
+
+  {%- for i in (1..count) -%}
+    {%- assign delay = i | minus: 1 | times: rotation -%}
+    #VcAnnouncementBar-{{ section.id }} .vc-ab__message:nth-of-type({{ i }}) {
+      animation-delay: {{ delay }}s;
+    }
+  {%- endfor -%}
+
+  @keyframes vc-ab-cycle-{{ section.id }} {
+    0% { opacity: 0; }
+    {%- assign visible_pct = 100 | divided_by: count -%}
+    {%- assign fade_in_end = visible_pct | times: 5 | divided_by: 100 -%}
+    {%- assign fade_out_start = visible_pct | minus: fade_in_end -%}
+    {{ fade_in_end }}% { opacity: 1; }
+    {{ fade_out_start }}% { opacity: 1; }
+    {{ visible_pct }}% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #VcAnnouncementBar-{{ section.id }} .vc-ab__message {
+      animation-duration: 0s;
+      animation-iteration-count: 1;
+    }
+  }
+  {%- endif -%}
+
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__message[href]:hover {
+    text-decoration: underline;
+  }
+
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__links {
+    grid-column: 3;
+    display: none;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__link {
+    color: inherit;
+    text-decoration: none;
+    font-size: 12px;
+    transition: opacity 0.15s ease;
+  }
+
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__link:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+
+  #VcAnnouncementBar-{{ section.id }} .vc-ab__divider {
+    width: 1px;
+    height: 14px;
+    background-color: currentColor;
+    opacity: 0.4;
+  }
+
+  @media screen and (min-width: 750px) {
+    #VcAnnouncementBar-{{ section.id }} {
+      font-size: 13px;
+    }
+
+    #VcAnnouncementBar-{{ section.id }} .vc-ab__spacer {
+      display: block;
+      grid-column: 1;
+    }
+
+    #VcAnnouncementBar-{{ section.id }} .vc-ab__links {
+      display: flex;
+    }
+
+    #VcAnnouncementBar-{{ section.id }} .vc-ab__link {
+      font-size: 13px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="vc-announcement-bar color-{{ section.settings.color_scheme }} gradient" id="VcAnnouncementBar-{{ section.id }}">
+  <div class="vc-ab__inner">
+    <div class="vc-ab__spacer" aria-hidden="true"></div>
+
+    {%- if count > 0 -%}
+      <div class="vc-ab__messages" role="region" aria-label="Announcements">
+        {%- for block in announcements -%}
+          {%- if block.settings.link != blank -%}
+            <a class="vc-ab__message" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+              {{- block.settings.text | escape -}}
+            </a>
+          {%- else -%}
+            <span class="vc-ab__message" {{ block.shopify_attributes }}>
+              {{- block.settings.text | escape -}}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="vc-ab__links">
+      {%- if section.settings.help_link_label != blank -%}
+        <a class="vc-ab__link" href="{{ section.settings.help_link_url | default: '#' }}">
+          {{- section.settings.help_link_label | escape -}}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.help_link_label != blank and section.settings.track_order_label != blank -%}
+        <span class="vc-ab__divider" aria-hidden="true"></span>
+      {%- endif -%}
+      {%- if section.settings.track_order_label != blank -%}
+        <a class="vc-ab__link" href="{{ section.settings.track_order_url | default: '#' }}">
+          {{- section.settings.track_order_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VC Announcement Bar",
+  "tag": "section",
+  "max_blocks": 6,
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "range",
+      "id": "rotation_seconds",
+      "label": "Rotation speed (seconds per message)",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Right-side links"
+    },
+    {
+      "type": "text",
+      "id": "help_link_label",
+      "label": "Help link label",
+      "default": "Help"
+    },
+    {
+      "type": "url",
+      "id": "help_link_url",
+      "label": "Help link URL"
+    },
+    {
+      "type": "text",
+      "id": "track_order_label",
+      "label": "Track order label",
+      "default": "Track Your Order"
+    },
+    {
+      "type": "url",
+      "id": "track_order_url",
+      "label": "Track order URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Message",
+          "default": "Free shipping on orders $100+"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Announcement Bar",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "rotation_seconds": 4,
+        "help_link_label": "Help",
+        "track_order_label": "Track Your Order"
+      },
+      "blocks": [
+        { "type": "announcement", "settings": { "text": "30-day money-back guarantee" } },
+        { "type": "announcement", "settings": { "text": "Free shipping on orders $100+" } },
+        { "type": "announcement", "settings": { "text": "Spring Relief Sale" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
