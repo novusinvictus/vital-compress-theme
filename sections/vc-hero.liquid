@@ -17,7 +17,7 @@
 
 {%- style -%}
   #VcHero-{{ section.id }} {
-    padding: 16px 0;
+    padding: 0 0 16px 0;
     background-color: rgb(var(--color-background));
     color: rgb(var(--color-foreground));
     text-align: center;
@@ -191,7 +191,9 @@
   #VcHero-{{ section.id }} .vc-hero__media {
     width: 100vw;
     margin-left: calc(50% - 50vw);
-    margin-top: 64px;
+    margin-top: 0;
+    margin-bottom: 16px;
+    order: -1;
     aspect-ratio: 4 / 3;
     overflow: hidden;
   }
@@ -264,6 +266,8 @@
       height: 100%;
       margin-left: 0;
       margin-top: 0;
+      margin-bottom: 0;
+      order: 0;
       aspect-ratio: auto;
       background-color: #FFFFFF;
       border-radius: 8px;
