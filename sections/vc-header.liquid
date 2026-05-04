@@ -266,8 +266,10 @@
     }
 
     #VcHeader-{{ section.id }} .vc-h__menu-toggle,
-    #VcHeader-{{ section.id }} .vc-h__search-toggle {
-      display: none;
+    #VcHeader-{{ section.id }} .vc-h__search-toggle,
+    #VcHeader-{{ section.id }} .vc-h__drawer,
+    #VcHeader-{{ section.id }} .vc-h__drawer-overlay {
+      display: none !important;
     }
 
     #VcHeader-{{ section.id }} .vc-h__logo {
@@ -447,35 +449,35 @@
       </form>
     </div>
   {%- endif -%}
-</header>
 
-<div class="vc-h__drawer-overlay" id="VcDrawerOverlay-{{ section.id }}" data-vc-drawer-overlay aria-hidden="true"></div>
-<aside
-  class="vc-h__drawer"
-  id="VcDrawer-{{ section.id }}"
-  aria-label="Main menu"
-  aria-hidden="true"
->
-  <div class="vc-h__drawer-header">
-    <p class="vc-h__drawer-title">Menu</p>
-    <button type="button" class="vc-h__icon-btn" data-vc-drawer-close aria-label="Close menu">
-      <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true">
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-      </svg>
-    </button>
-  </div>
-  <ul class="vc-h__drawer-nav" role="list">
-    {%- if has_menu -%}
-      {%- for link in menu.links -%}
-        <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-      {%- endfor -%}
-    {%- else -%}
-      <li><a href="{{ routes.root_url }}">Home</a></li>
-      <li><a href="{{ routes.collections_url }}">Shop</a></li>
-    {%- endif -%}
-  </ul>
-</aside>
+  <div class="vc-h__drawer-overlay" id="VcDrawerOverlay-{{ section.id }}" data-vc-drawer-overlay aria-hidden="true"></div>
+  <aside
+    class="vc-h__drawer"
+    id="VcDrawer-{{ section.id }}"
+    aria-label="Main menu"
+    aria-hidden="true"
+  >
+    <div class="vc-h__drawer-header">
+      <p class="vc-h__drawer-title">Menu</p>
+      <button type="button" class="vc-h__icon-btn" data-vc-drawer-close aria-label="Close menu">
+        <svg class="vc-h__icon" viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <ul class="vc-h__drawer-nav" role="list">
+      {%- if has_menu -%}
+        {%- for link in menu.links -%}
+          <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+        {%- endfor -%}
+      {%- else -%}
+        <li><a href="{{ routes.root_url }}">Home</a></li>
+        <li><a href="{{ routes.collections_url }}">Shop</a></li>
+      {%- endif -%}
+    </ul>
+  </aside>
+</header>
 
 <script>
   (function () {
