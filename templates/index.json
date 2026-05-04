@@ -293,9 +293,8 @@
       "type": "vc-help",
       "settings": {
         "color_scheme": "scheme-2",
-        "heading": "Have questions? We are here.",
-        "body": "Our customer care team is available Monday to Friday, 9am to 5pm AEST.",
-        "email": "care@vitalcompress.com.au",
+        "heading": "Do you have any questions?",
+        "body": "<p>Our customer care team is available <strong>Monday to Friday, 9am to 5pm AEST<\/strong>.<\/p>",
         "cta_label": "CONTACT US",
         "cta_url": ""
       }
