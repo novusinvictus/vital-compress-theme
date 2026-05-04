@@ -346,6 +346,7 @@
     <div class="vc-footer__columns">
       {%- comment -%} Brand block {%- endcomment -%}
       <div class="vc-footer__brand">
+        {%- assign brand_text = section.settings.logo_text | default: shop.name -%}
         {%- if section.settings.logo_image != blank -%}
           {{
             section.settings.logo_image
@@ -354,11 +355,11 @@
               widths: '160, 320, 480',
               sizes: '160px',
               loading: 'lazy',
-              alt: shop.name,
+              alt: brand_text,
               class: 'vc-footer__logo'
           }}
         {%- else -%}
-          <p class="vc-footer__logo-fallback">{{ shop.name | escape }}</p>
+          <p class="vc-footer__logo-fallback">{{ brand_text | escape }}</p>
         {%- endif -%}
 
         {%- if section.settings.tagline != blank -%}
@@ -443,7 +444,7 @@
         {%- if section.settings.copyright_text != blank -%}
           &copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_text | replace: '©', '' | replace: '&copy;', '' | strip | escape }}
         {%- else -%}
-          &copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}. All rights reserved.
+          &copy; {{ 'now' | date: '%Y' }} {{ brand_text | escape }}. All rights reserved.
         {%- endif -%}
       </p>
 
@@ -480,7 +481,14 @@
     {
       "type": "image_picker",
       "id": "logo_image",
-      "label": "Logo image"
+      "label": "Logo image (optional)",
+      "info": "Falls back to brand text if not set."
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Brand text",
+      "default": "Vital Compress"
     },
     {
       "type": "text",
@@ -575,6 +583,7 @@
       "name": "VC Footer",
       "settings": {
         "color_scheme": "scheme-4",
+        "logo_text": "Vital Compress",
         "tagline": "Premium bamboo compression for lasting relief",
         "newsletter_heading": "Stay updated",
         "newsletter_copy": "Get 10% off your first order plus expert tips on managing joint comfort.",
