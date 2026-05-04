@@ -153,6 +153,8 @@
   #VcFooter-{{ section.id }} .vc-footer__col-list a:hover {
     color: rgb(var(--color-foreground));
     text-decoration: underline;
+    text-decoration-color: var(--vc-primary);
+    text-underline-offset: 3px;
   }
 
   /* Newsletter */
@@ -224,6 +226,11 @@
 
   #VcFooter-{{ section.id }} .vc-footer__newsletter-button:hover {
     filter: brightness(0.92);
+  }
+
+  #VcFooter-{{ section.id }} .vc-footer__newsletter-button:active {
+    filter: brightness(0.85);
+    transform: translateY(1px);
   }
 
   #VcFooter-{{ section.id }} .vc-footer__newsletter-success {

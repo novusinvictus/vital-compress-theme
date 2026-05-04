@@ -82,11 +82,12 @@
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
 
   #VcBestsellers-{{ section.id }} .vc-card:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
   }
 
   #VcBestsellers-{{ section.id }} .vc-card:focus-visible {
@@ -252,6 +253,11 @@
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__cta:hover {
     filter: brightness(0.92);
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__cta:active {
+    filter: brightness(0.85);
+    transform: translateY(1px);
   }
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__cta:focus-visible {
