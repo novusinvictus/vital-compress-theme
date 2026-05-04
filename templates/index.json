@@ -210,8 +210,7 @@
       },
       "block_order": ["review_1", "review_2", "review_3"],
       "settings": {
-        "color_scheme": "scheme-1",
-        "heading": "What our customers say"
+        "heading": "See why our customers are so satisfied.."
       }
     },
     "vc_collections": {

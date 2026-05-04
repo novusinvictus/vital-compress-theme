@@ -4,9 +4,9 @@
 
 {%- style -%}
   #VcCustomerReviews-{{ section.id }} {
-    padding: var(--vc-section-py-lg) 0;
-    background-color: rgb(var(--color-background));
-    color: rgb(var(--color-foreground));
+    padding: 64px 0;
+    background-color: #F8FAF9;
+    color: #000000;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr__inner {
@@ -15,87 +15,85 @@
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr__header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 48px;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr__heading {
     font-family: var(--font-heading-family);
     font-style: var(--font-heading-style);
-    font-weight: var(--font-heading-weight);
-    color: rgb(var(--color-foreground));
-    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 600;
+    color: #000000;
+    font-size: 24px;
     line-height: 1.15;
     margin: 0;
+    text-align: left;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr__subheading {
     font-family: var(--font-body-family);
-    color: rgba(var(--color-foreground), 0.7);
+    color: rgba(0, 0, 0, 0.7);
     font-size: 16px;
     line-height: 1.5;
-    margin: 0;
+    margin: 8px 0 0;
     max-width: 540px;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 24px;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: clamp(20px, 4vw, 32px);
-    border-radius: 12px;
-    background-color: rgba(var(--color-foreground), 0.04);
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #EAEEE3;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__top {
+    display: flex;
+    flex-direction: column;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__stars {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     line-height: 0;
+    margin-bottom: 16px;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__star {
     width: 16px;
     height: 16px;
-    fill: rgb(var(--color-button));
+    fill: #000000;
     display: block;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__body {
     font-family: var(--font-body-family);
-    font-size: 16px;
-    line-height: 1.55;
-    color: rgba(var(--color-foreground), 0.85);
-    margin: 0;
-  }
-
-  #VcCustomerReviews-{{ section.id }} .vc-cr-card__spacer {
-    margin-top: auto;
+    font-size: 18px;
+    line-height: 1.625;
+    color: #000000;
+    margin: 0 0 24px;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__attribution {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-bottom: 24px;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__avatar-wrap {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     flex-shrink: 0;
     border-radius: 50%;
     overflow: hidden;
-    background-color: rgb(var(--color-background));
+    background-color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,55 +107,54 @@
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__avatar-fallback {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: var(--font-body-family);
     font-size: 14px;
     font-weight: 600;
-    color: rgba(var(--color-foreground), 0.6);
+    color: rgba(0, 0, 0, 0.6);
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__person {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 0;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__name {
     font-family: var(--font-body-family);
-    font-size: 15px;
-    font-weight: 600;
-    color: rgb(var(--color-foreground));
+    font-size: 14px;
+    color: #000000;
     margin: 0;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__location {
     font-family: var(--font-body-family);
-    font-size: 13px;
-    color: rgba(var(--color-foreground), 0.6);
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
     margin: 0;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__product {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(var(--color-foreground), 0.1);
+    gap: 16px;
+    padding-top: 8px;
+    border-top: 1px solid #000000;
     text-decoration: none;
     color: inherit;
+    margin-top: auto;
+    transition: opacity 0.2s ease;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product:hover {
+    opacity: 0.8;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-image-wrap {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
     flex-shrink: 0;
-    border-radius: 6px;
+    border-radius: 4px;
     overflow: hidden;
-    background-color: rgb(var(--color-background));
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-image,
@@ -169,9 +166,7 @@
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    flex: 1;
     min-width: 0;
   }
 
@@ -179,41 +174,57 @@
     font-family: var(--font-body-family);
     font-size: 14px;
     font-weight: 500;
-    color: rgb(var(--color-foreground));
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    color: #000000;
+    margin: 0 0 4px;
   }
 
-  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-price {
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-price-current {
     font-family: var(--font-body-family);
-    font-size: 13px;
-    color: rgba(var(--color-foreground), 0.7);
-    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
   }
 
-  @media screen and (min-width: 750px) {
-    #VcCustomerReviews-{{ section.id }} .vc-cr__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
+  #VcCustomerReviews-{{ section.id }} .vc-cr-card__product-price-compare {
+    font-family: var(--font-body-family);
+    font-size: 12px;
+    color: #000000;
+    text-decoration: line-through;
+  }
+
+  @media screen and (min-width: 768px) {
+    #VcCustomerReviews-{{ section.id }} .vc-cr-card {
+      padding: 24px;
+    }
+
+    #VcCustomerReviews-{{ section.id }} .vc-cr__heading {
+      font-size: 36px;
     }
   }
 
-  @media screen and (min-width: 990px) {
+  @media screen and (min-width: 1024px) {
     #VcCustomerReviews-{{ section.id }} .vc-cr__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 24px;
+      gap: 30px;
+    }
+
+    #VcCustomerReviews-{{ section.id }} .vc-cr-card {
+      padding: 32px;
     }
   }
 {%- endstyle -%}
 
 {%- capture star_svg -%}
-  <svg class="vc-cr-card__star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="vc-cr-card__star" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 6.28345C16 6.42478 15.9167 6.57878 15.75 6.74545L12.2593 10.1488L13.086 14.9568C13.0927 15.0015 13.096 15.0661 13.096 15.1495C13.0998 15.2709 13.0645 15.3903 12.9953 15.4901C12.962 15.5361 12.9177 15.573 12.8665 15.5974C12.8152 15.6219 12.7587 15.6331 12.702 15.6301C12.58 15.6301 12.452 15.5915 12.3173 15.5141L8 13.2461L3.68267 15.5155C3.54133 15.5921 3.41333 15.6308 3.298 15.6308C3.16333 15.6308 3.06267 15.5841 2.99533 15.4908C2.9259 15.391 2.89037 15.2716 2.894 15.1501C2.894 15.1115 2.90067 15.0475 2.914 14.9575L3.74067 10.1501L0.240667 6.74612C0.08 6.57212 0 6.41878 0 6.28345C0 6.04678 0.18 5.89878 0.538667 5.84145L5.36533 5.13945L7.52867 0.764784C7.65067 0.50145 7.80733 0.370117 8 0.370117C8.19267 0.370117 8.34933 0.50145 8.47133 0.764784L10.6347 5.13945L15.4613 5.84145C15.8207 5.89878 16 6.04678 16 6.28345Z"/></svg>
 {%- endcapture -%}
 
-<div class="vc-customer-reviews scroll-trigger animate--fade-in color-{{ section.settings.color_scheme }} gradient" id="VcCustomerReviews-{{ section.id }}">
+<div class="vc-customer-reviews scroll-trigger animate--fade-in" id="VcCustomerReviews-{{ section.id }}">
   <div class="vc-cr__inner page-width">
     <div class="vc-cr__header">
       {%- if section.settings.heading != blank -%}
@@ -230,40 +241,40 @@
         {%- assign linked = block.settings.linked_product -%}
         {%- assign initial = block.settings.name | strip | slice: 0 | upcase -%}
         <article class="vc-cr-card" {{ block.shopify_attributes }}>
-          <div class="vc-cr-card__stars" aria-label="{{ rating }} out of 5 stars">
-            {%- for i in (1..rating) -%}{{ star_svg }}{%- endfor -%}
-          </div>
-
-          {%- if block.settings.body != blank -%}
-            <p class="vc-cr-card__body">{{ block.settings.body | escape }}</p>
-          {%- endif -%}
-
-          <div class="vc-cr-card__spacer"></div>
-
-          <div class="vc-cr-card__attribution">
-            <div class="vc-cr-card__avatar-wrap">
-              {%- if block.settings.avatar != blank -%}
-                {{
-                  block.settings.avatar
-                  | image_url: width: 120
-                  | image_tag:
-                    widths: '40, 80, 120',
-                    sizes: '40px',
-                    loading: 'lazy',
-                    alt: block.settings.name | default: 'Customer',
-                    class: 'vc-cr-card__avatar'
-                }}
-              {%- else -%}
-                <span class="vc-cr-card__avatar-fallback" aria-hidden="true">{{ initial | default: '•' }}</span>
-              {%- endif -%}
+          <div class="vc-cr-card__top">
+            <div class="vc-cr-card__stars" aria-label="{{ rating }} out of 5 stars">
+              {%- for i in (1..rating) -%}{{ star_svg }}{%- endfor -%}
             </div>
-            <div class="vc-cr-card__person">
-              {%- if block.settings.name != blank -%}
-                <p class="vc-cr-card__name">{{ block.settings.name | escape }}</p>
-              {%- endif -%}
-              {%- if block.settings.location != blank -%}
-                <p class="vc-cr-card__location">{{ block.settings.location | escape }}</p>
-              {%- endif -%}
+
+            {%- if block.settings.body != blank -%}
+              <blockquote class="vc-cr-card__body">"{{ block.settings.body | escape }}"</blockquote>
+            {%- endif -%}
+
+            <div class="vc-cr-card__attribution">
+              <div class="vc-cr-card__avatar-wrap">
+                {%- if block.settings.avatar != blank -%}
+                  {{
+                    block.settings.avatar
+                    | image_url: width: 144
+                    | image_tag:
+                      widths: '48, 96, 144',
+                      sizes: '48px',
+                      loading: 'lazy',
+                      alt: block.settings.name | default: 'Customer',
+                      class: 'vc-cr-card__avatar'
+                  }}
+                {%- else -%}
+                  <span class="vc-cr-card__avatar-fallback" aria-hidden="true">{{ initial | default: '•' }}</span>
+                {%- endif -%}
+              </div>
+              <div class="vc-cr-card__person">
+                {%- if block.settings.name != blank -%}
+                  <p class="vc-cr-card__name">{{ block.settings.name | escape }}</p>
+                {%- endif -%}
+                {%- if block.settings.location != blank -%}
+                  <p class="vc-cr-card__location">{{ block.settings.location | escape }}</p>
+                {%- endif -%}
+              </div>
             </div>
           </div>
 
@@ -273,10 +284,10 @@
                 {%- if linked.featured_image != blank -%}
                   {{
                     linked.featured_image
-                    | image_url: width: 168
+                    | image_url: width: 240
                     | image_tag:
-                      widths: '72, 144, 216',
-                      sizes: '72px',
+                      widths: '80, 160, 240',
+                      sizes: '80px',
                       loading: 'lazy',
                       alt: linked.featured_image.alt | default: linked.title,
                       class: 'vc-cr-card__product-image'
@@ -287,7 +298,12 @@
               </div>
               <div class="vc-cr-card__product-info">
                 <p class="vc-cr-card__product-title">{{ linked.title | escape }}</p>
-                <p class="vc-cr-card__product-price">{{ linked.price | money }}</p>
+                <div class="vc-cr-card__product-price-row">
+                  <span class="vc-cr-card__product-price-current">{{ linked.price | money }}</span>
+                  {%- if linked.compare_at_price > linked.price -%}
+                    <span class="vc-cr-card__product-price-compare">{{ linked.compare_at_price | money }}</span>
+                  {%- endif -%}
+                </div>
               </div>
             </a>
           {%- endif -%}
@@ -307,21 +323,15 @@
   },
   "settings": [
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
-    },
-    {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "What our customers say"
+      "default": "See why our customers are so satisfied.."
     },
     {
       "type": "textarea",
       "id": "subheading",
-      "label": "Subheading"
+      "label": "Subheading (optional)"
     }
   ],
   "blocks": [
@@ -370,8 +380,7 @@
     {
       "name": "VC Customer Reviews",
       "settings": {
-        "color_scheme": "scheme-1",
-        "heading": "What our customers say"
+        "heading": "See why our customers are so satisfied.."
       },
       "blocks": [
         {
