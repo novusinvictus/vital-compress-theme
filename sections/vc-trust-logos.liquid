@@ -7,58 +7,82 @@
     padding: var(--vc-section-py-sm) 0;
     background-color: var(--vc-soft-tint);
     color: rgb(var(--color-foreground));
+    overflow-x: clip;
   }
 
   #VcTrustLogos-{{ section.id }} .vc-trust-logos__inner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
     text-align: center;
-  }
-
-  #VcTrustLogos-{{ section.id }} .vc-trust-logos__intro {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-shrink: 0;
   }
 
   #VcTrustLogos-{{ section.id }} .vc-trust-logos__eyebrow {
     font-family: var(--font-body-family);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(var(--color-foreground), 0.6);
+    color: rgba(var(--color-foreground), 0.7);
     margin: 0;
   }
 
-  #VcTrustLogos-{{ section.id }} .vc-trust-logos__divider {
-    display: none;
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__viewport {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
   }
 
-  #VcTrustLogos-{{ section.id }} .vc-trust-logos__grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__track {
+    display: flex;
+    width: max-content;
+    animation: vc-trust-logos-scroll-{{ section.id }} 30s linear infinite;
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__viewport:hover .vc-trust-logos__track {
+    animation-play-state: paused;
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__list {
+    display: flex;
     align-items: center;
-    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
   }
 
   #VcTrustLogos-{{ section.id }} .vc-trust-logos__item {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 32px;
+    padding: 0 32px;
+    min-height: 40px;
   }
 
   #VcTrustLogos-{{ section.id }} .vc-trust-logos__image {
     max-height: 32px;
     width: auto;
     object-fit: contain;
-    filter: grayscale(100%) opacity(0.6);
+    filter: grayscale(100%) opacity(0.7);
     transition: filter 0.2s ease;
+    display: block;
   }
 
   #VcTrustLogos-{{ section.id }} .vc-trust-logos__item:hover .vc-trust-logos__image {
@@ -66,8 +90,7 @@
   }
 
   #VcTrustLogos-{{ section.id }} .vc-trust-logos__placeholder {
-    width: 100%;
-    max-width: 120px;
+    width: 120px;
     height: 32px;
     background-color: rgba(var(--color-foreground), 0.06);
     border-radius: 4px;
@@ -79,67 +102,76 @@
     color: rgba(var(--color-foreground), 0.4);
   }
 
-  @media screen and (min-width: 750px) {
-    #VcTrustLogos-{{ section.id }} .vc-trust-logos__inner {
-      flex-direction: row;
-      align-items: stretch;
-      gap: 32px;
-      text-align: left;
+  @keyframes vc-trust-logos-scroll-{{ section.id }} {
+    from {
+      transform: translateX(0);
     }
-
-    #VcTrustLogos-{{ section.id }} .vc-trust-logos__intro {
-      align-items: flex-start;
-      justify-content: center;
+    to {
+      transform: translateX(-50%);
     }
+  }
 
-    #VcTrustLogos-{{ section.id }} .vc-trust-logos__divider {
-      display: block;
-      width: 1px;
-      background-color: rgba(var(--color-foreground), 0.15);
-      flex-shrink: 0;
-    }
-
-    #VcTrustLogos-{{ section.id }} .vc-trust-logos__grid {
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 32px;
-      flex-grow: 1;
+  @media (prefers-reduced-motion: reduce) {
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__track {
+      animation: none;
     }
   }
 {%- endstyle -%}
 
 <div class="vc-trust-logos scroll-trigger animate--fade-in color-{{ section.settings.color_scheme }} gradient" id="VcTrustLogos-{{ section.id }}">
-  <div class="vc-trust-logos__inner page-width">
-    <div class="vc-trust-logos__intro">
-      {%- if section.settings.eyebrow_text != blank -%}
-        <p class="vc-trust-logos__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
-      {%- endif -%}
-    </div>
+  <div class="vc-trust-logos__inner">
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="vc-trust-logos__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
 
-    <div class="vc-trust-logos__divider" aria-hidden="true"></div>
-
-    <div class="vc-trust-logos__grid">
-      {%- if logo_blocks.size > 0 -%}
-        {%- for block in logo_blocks -%}
-          {%- assign alt = block.settings.alt_text | default: 'Press logo' -%}
-          <div class="vc-trust-logos__item" {{ block.shopify_attributes }}>
-            {%- if block.settings.image != blank -%}
-              {{
-                block.settings.image
-                | image_url: width: 240
-                | image_tag:
-                  widths: '120, 240',
-                  sizes: '120px',
-                  loading: 'lazy',
-                  alt: alt,
-                  class: 'vc-trust-logos__image'
-              }}
-            {%- else -%}
-              <div class="vc-trust-logos__placeholder">{{ alt | escape }}</div>
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
-      {%- endif -%}
-    </div>
+    {%- if logo_blocks.size > 0 -%}
+      <div class="vc-trust-logos__viewport">
+        <div class="vc-trust-logos__track">
+          <ul class="vc-trust-logos__list" role="list">
+            {%- for block in logo_blocks -%}
+              {%- assign alt = block.settings.alt_text | default: 'Press logo' -%}
+              <li class="vc-trust-logos__item" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 240
+                    | image_tag:
+                      widths: '120, 240',
+                      sizes: '120px',
+                      loading: 'lazy',
+                      alt: alt,
+                      class: 'vc-trust-logos__image'
+                  }}
+                {%- else -%}
+                  <div class="vc-trust-logos__placeholder">{{ alt | escape }}</div>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+          <ul class="vc-trust-logos__list" role="list" aria-hidden="true">
+            {%- for block in logo_blocks -%}
+              {%- assign alt = block.settings.alt_text | default: 'Press logo' -%}
+              <li class="vc-trust-logos__item">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 240
+                    | image_tag:
+                      widths: '120, 240',
+                      sizes: '120px',
+                      loading: 'lazy',
+                      alt: '',
+                      class: 'vc-trust-logos__image'
+                  }}
+                {%- else -%}
+                  <div class="vc-trust-logos__placeholder">{{ alt | escape }}</div>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
