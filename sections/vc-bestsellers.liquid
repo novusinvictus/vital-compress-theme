@@ -392,19 +392,7 @@
                 {%- endif -%}
               </div>
               <div class="vc-card__body">
-                {%- if block.settings.eyebrow != blank -%}
-                  <p class="vc-card__eyebrow">{{ block.settings.eyebrow | escape }}</p>
-                {%- endif -%}
                 <h3 class="vc-card__title">{{ card_name | escape }}</h3>
-                {%- if block.settings.review_count > 0 -%}
-                  {%- assign filled_count = block.settings.star_rating | floor -%}
-                  <p class="vc-card__rating">
-                    <span class="vc-card__stars" aria-label="{{ block.settings.star_rating }} out of 5 stars">
-                      {%- for i in (1..filled_count) -%}{{ star_svg }}{%- endfor -%}
-                    </span>
-                    <span>({{ block.settings.review_count }})</span>
-                  </p>
-                {%- endif -%}
                 <p class="vc-card__price">
                   <span class="vc-card__price-current">{{ product.price | money }}</span>
                   {%- if product.compare_at_price > product.price -%}
@@ -419,9 +407,6 @@
                 <div class="vc-card__placeholder">Select a product in the editor</div>
               </div>
               <div class="vc-card__body">
-                {%- if block.settings.eyebrow != blank -%}
-                  <p class="vc-card__eyebrow">{{ block.settings.eyebrow | escape }}</p>
-                {%- endif -%}
                 <h3 class="vc-card__title">{{ block.settings.custom_name | default: 'Select a product' | escape }}</h3>
               </div>
             </div>
