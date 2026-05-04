@@ -175,10 +175,7 @@
     },
     "vc_specialists": {
       "type": "vc-specialists",
-      "settings": {
-        "heading": "Physiotherapist-Tested & Recommended",
-        "body": "Inspired by clinical research and real-world testing, Vital Compress sleeves support healthy circulation, joint stability, and pain-free movement across daily activity. Trusted by physiotherapists and orthopaedic specialists for everyday wear and long-term support."
-      }
+      "settings": {}
     },
     "vc_customer_reviews": {
       "type": "vc-customer-reviews",
