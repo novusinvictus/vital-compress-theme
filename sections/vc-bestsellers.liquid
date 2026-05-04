@@ -68,14 +68,25 @@
   }
 
   #VcBestsellers-{{ section.id }} .vc-bestsellers__grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
     gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  #VcBestsellers-{{ section.id }} .vc-bestsellers__grid::-webkit-scrollbar {
+    display: none;
   }
 
   #VcBestsellers-{{ section.id }} .vc-card {
     display: flex;
     flex-direction: column;
+    flex: 0 0 65%;
+    min-width: 240px;
+    scroll-snap-align: start;
     text-decoration: none;
     color: inherit;
     background-color: #FFFFFF;
@@ -290,8 +301,17 @@
     }
 
     #VcBestsellers-{{ section.id }} .vc-bestsellers__grid {
+      display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 24px;
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+
+    #VcBestsellers-{{ section.id }} .vc-card {
+      flex: initial;
+      min-width: 0;
+      width: auto;
     }
 
     #VcBestsellers-{{ section.id }} .vc-card__title {
