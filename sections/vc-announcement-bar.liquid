@@ -57,28 +57,30 @@
     animation: vc-ab-cycle-{{ section.id }} {{ total_cycle }}s linear infinite;
   }
 
+  {%- assign visible_pct = 100 | divided_by: count -%}
+  {%- assign hide_pct = visible_pct | plus: 1 -%}
+
+  @keyframes vc-ab-cycle-{{ section.id }} {
+    0% { opacity: 1; }
+    {{ visible_pct }}% { opacity: 1; }
+    {{ hide_pct }}% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
   {%- for i in (1..count) -%}
     {%- assign delay = i | minus: 1 | times: rotation -%}
-    #VcAnnouncementBar-{{ section.id }} .vc-ab__message:nth-of-type({{ i }}) {
+    #VcAnnouncementBar-{{ section.id }} .vc-ab__message:nth-child({{ i }}) {
       animation-delay: {{ delay }}s;
     }
   {%- endfor -%}
 
-  @keyframes vc-ab-cycle-{{ section.id }} {
-    0% { opacity: 0; }
-    {%- assign visible_pct = 100 | divided_by: count -%}
-    {%- assign fade_in_end = visible_pct | times: 5 | divided_by: 100 -%}
-    {%- assign fade_out_start = visible_pct | minus: fade_in_end -%}
-    {{ fade_in_end }}% { opacity: 1; }
-    {{ fade_out_start }}% { opacity: 1; }
-    {{ visible_pct }}% { opacity: 0; }
-    100% { opacity: 0; }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     #VcAnnouncementBar-{{ section.id }} .vc-ab__message {
-      animation-duration: 0s;
-      animation-iteration-count: 1;
+      animation: none;
+      opacity: 0;
+    }
+    #VcAnnouncementBar-{{ section.id }} .vc-ab__message:first-child {
+      opacity: 1;
     }
   }
   {%- endif -%}
