@@ -97,11 +97,7 @@
     display: block;
   }
 
-  #VcTrustRatings-{{ section.id }} .vc-tr-card__star--empty {
-    fill: rgba(0, 0, 0, 0.15);
-  }
-
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 750px) {
     #VcTrustRatings-{{ section.id }} {
       padding: 64px 24px;
     }
@@ -128,10 +124,6 @@
 {%- capture star_svg -%}
   <svg class="vc-tr-card__star" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 6.28345C16 6.42478 15.9167 6.57878 15.75 6.74545L12.2593 10.1488L13.086 14.9568C13.0927 15.0015 13.096 15.0661 13.096 15.1495C13.0998 15.2709 13.0645 15.3903 12.9953 15.4901C12.962 15.5361 12.9177 15.573 12.8665 15.5974C12.8152 15.6219 12.7587 15.6331 12.702 15.6301C12.58 15.6301 12.452 15.5915 12.3173 15.5141L8 13.2461L3.68267 15.5155C3.54133 15.5921 3.41333 15.6308 3.298 15.6308C3.16333 15.6308 3.06267 15.5841 2.99533 15.4908C2.9259 15.391 2.89037 15.2716 2.894 15.1501C2.894 15.1115 2.90067 15.0475 2.914 14.9575L3.74067 10.1501L0.240667 6.74612C0.08 6.57212 0 6.41878 0 6.28345C0 6.04678 0.18 5.89878 0.538667 5.84145L5.36533 5.13945L7.52867 0.764784C7.65067 0.50145 7.80733 0.370117 8 0.370117C8.19267 0.370117 8.34933 0.50145 8.47133 0.764784L10.6347 5.13945L15.4613 5.84145C15.8207 5.89878 16 6.04678 16 6.28345Z"/></svg>
 {%- endcapture -%}
-{%- capture star_svg_empty -%}
-  <svg class="vc-tr-card__star vc-tr-card__star--empty" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 6.28345C16 6.42478 15.9167 6.57878 15.75 6.74545L12.2593 10.1488L13.086 14.9568C13.0927 15.0015 13.096 15.0661 13.096 15.1495C13.0998 15.2709 13.0645 15.3903 12.9953 15.4901C12.962 15.5361 12.9177 15.573 12.8665 15.5974C12.8152 15.6219 12.7587 15.6331 12.702 15.6301C12.58 15.6301 12.452 15.5915 12.3173 15.5141L8 13.2461L3.68267 15.5155C3.54133 15.5921 3.41333 15.6308 3.298 15.6308C3.16333 15.6308 3.06267 15.5841 2.99533 15.4908C2.9259 15.391 2.89037 15.2716 2.894 15.1501C2.894 15.1115 2.90067 15.0475 2.914 14.9575L3.74067 10.1501L0.240667 6.74612C0.08 6.57212 0 6.41878 0 6.28345C0 6.04678 0.18 5.89878 0.538667 5.84145L5.36533 5.13945L7.52867 0.764784C7.65067 0.50145 7.80733 0.370117 8 0.370117C8.19267 0.370117 8.34933 0.50145 8.47133 0.764784L10.6347 5.13945L15.4613 5.84145C15.8207 5.89878 16 6.04678 16 6.28345Z"/></svg>
-{%- endcapture -%}
-
 <div class="vc-trust-ratings scroll-trigger animate--fade-in" id="VcTrustRatings-{{ section.id }}">
   <div class="vc-tr__inner">
     {%- if section.settings.heading != blank -%}
@@ -141,8 +133,6 @@
     <div class="vc-tr__cards">
       {%- for block in platform_blocks -%}
         {%- assign rating = block.settings.rating | default: 5 -%}
-        {%- assign filled = rating | floor -%}
-        {%- assign empty = 5 | minus: filled -%}
         {%- assign platform_name = block.settings.platform_name | default: 'Platform' -%}
         <div class="vc-tr-card" {{ block.shopify_attributes }}>
           {%- if block.settings.logo_image != blank -%}
@@ -163,12 +153,7 @@
           <div class="vc-tr-card__rating-row">
             <span class="vc-tr-card__rating-text">Rated {{ rating }}</span>
             <span class="vc-tr-card__stars" aria-label="{{ rating }} out of 5 stars">
-              {%- if filled > 0 -%}
-                {%- for i in (1..filled) -%}{{ star_svg }}{%- endfor -%}
-              {%- endif -%}
-              {%- if empty > 0 -%}
-                {%- for i in (1..empty) -%}{{ star_svg_empty }}{%- endfor -%}
-              {%- endif -%}
+              {%- for i in (1..5) -%}{{ star_svg }}{%- endfor -%}
             </span>
           </div>
         </div>
