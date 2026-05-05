@@ -4,7 +4,7 @@
 
 {%- style -%}
   #VcTrustLogos-{{ section.id }} {
-    padding: var(--vc-section-py-sm) 0;
+    padding: 24px 0;
     background-color: var(--vc-soft-tint);
     color: rgb(var(--color-foreground));
     overflow-x: clip;
@@ -14,18 +14,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     text-align: center;
   }
 
   #VcTrustLogos-{{ section.id }} .vc-trust-logos__eyebrow {
     font-family: var(--font-body-family);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: rgba(var(--color-foreground), 0.7);
     margin: 0;
+    white-space: nowrap;
+  }
+
+  #VcTrustLogos-{{ section.id }} .vc-trust-logos__divider {
+    display: none;
+    width: 1px;
+    height: 16px;
+    background-color: rgba(var(--color-foreground), 0.25);
+    flex-shrink: 0;
   }
 
   #VcTrustLogos-{{ section.id }} .vc-trust-logos__viewport {
@@ -116,6 +125,49 @@
       animation: none;
     }
   }
+
+  @media screen and (min-width: 750px) {
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      max-width: var(--page-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__divider {
+      display: block;
+    }
+
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__viewport {
+      width: auto;
+      flex: 1;
+      margin-left: 0;
+      overflow: visible;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__track {
+      animation: none;
+      width: 100%;
+    }
+
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__list {
+      flex: 1;
+      justify-content: space-around;
+    }
+
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__list--clone {
+      display: none;
+    }
+
+    #VcTrustLogos-{{ section.id }} .vc-trust-logos__item {
+      padding: 0;
+    }
+  }
 {%- endstyle -%}
 
 <div class="vc-trust-logos scroll-trigger animate--fade-in color-{{ section.settings.color_scheme }} gradient" id="VcTrustLogos-{{ section.id }}">
@@ -123,6 +175,8 @@
     {%- if section.settings.eyebrow_text != blank -%}
       <p class="vc-trust-logos__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
     {%- endif -%}
+
+    <span class="vc-trust-logos__divider" aria-hidden="true"></span>
 
     {%- if logo_blocks.size > 0 -%}
       <div class="vc-trust-logos__viewport">
@@ -148,7 +202,7 @@
               </li>
             {%- endfor -%}
           </ul>
-          <ul class="vc-trust-logos__list" role="list" aria-hidden="true">
+          <ul class="vc-trust-logos__list vc-trust-logos__list--clone" role="list" aria-hidden="true">
             {%- for block in logo_blocks -%}
               {%- assign alt = block.settings.alt_text | default: 'Press logo' -%}
               <li class="vc-trust-logos__item">
