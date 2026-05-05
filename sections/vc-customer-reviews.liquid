@@ -90,16 +90,19 @@
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__star {
     width: 16px;
     height: 16px;
-    fill: #EBBF20;
+    fill: #000000;
     display: block;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__body {
     font-family: var(--font-body-family);
+    font-style: normal;
     font-size: 17px;
     line-height: 1.6;
     color: #000000;
     margin: 0 0 24px;
+    padding: 0;
+    border-left: 0;
   }
 
   #VcCustomerReviews-{{ section.id }} .vc-cr-card__attribution {
@@ -220,35 +223,24 @@
     text-decoration: line-through;
   }
 
-  #VcCustomerReviews-{{ section.id }} .vc-cr__dots {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    list-style: none;
-    padding: 0;
-    margin: 24px 0 0;
-  }
-
-  #VcCustomerReviews-{{ section.id }} .vc-cr__dot {
-    width: 8px;
-    height: 8px;
-    padding: 0;
+  #VcCustomerReviews-{{ section.id }} .vc-cr__progress {
+    width: min(280px, 60%);
+    height: 3px;
+    margin: 24px auto 0;
+    background-color: rgba(0, 0, 0, 0.15);
     border-radius: 999px;
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 0;
-    cursor: pointer;
-    transition: width 0.25s ease, background-color 0.25s ease;
+    position: relative;
+    overflow: hidden;
   }
 
-  #VcCustomerReviews-{{ section.id }} .vc-cr__dot.is-active {
-    width: 32px;
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-
-  #VcCustomerReviews-{{ section.id }} .vc-cr__dot:focus-visible {
-    outline: 2px solid var(--vc-primary);
-    outline-offset: 3px;
+  #VcCustomerReviews-{{ section.id }} .vc-cr__progress-thumb {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+    border-radius: 999px;
+    transition: left 0.25s ease, width 0.25s ease;
   }
 
   @media screen and (min-width: 750px) {
@@ -369,19 +361,21 @@
 
   {%- if review_count > 1 -%}
     <div class="vc-cr__inner page-width">
-      <ul class="vc-cr__dots" role="list" aria-label="Review pagination">
-        {%- for block in review_blocks -%}
-          <li>
-            <button
-              type="button"
-              class="vc-cr__dot{% if forloop.first %} is-active{% endif %}"
-              data-vc-cr-dot
-              data-index="{{ forloop.index0 }}"
-              aria-label="Go to review {{ forloop.index }} of {{ review_count }}"
-            ></button>
-          </li>
-        {%- endfor -%}
-      </ul>
+      <div
+        class="vc-cr__progress"
+        role="progressbar"
+        aria-label="Reviews carousel position"
+        aria-valuemin="1"
+        aria-valuemax="{{ review_count }}"
+        aria-valuenow="1"
+        data-vc-cr-progress
+      >
+        <div
+          class="vc-cr__progress-thumb"
+          data-vc-cr-thumb
+          style="width: {{ 100 | divided_by: review_count }}%; left: 0%;"
+        ></div>
+      </div>
     </div>
   {%- endif -%}
 </div>
@@ -392,11 +386,15 @@
     var root = document.getElementById('VcCustomerReviews-{{ section.id }}');
     if (!root) return;
     var track = root.querySelector('[data-vc-cr-track]');
-    var dots = root.querySelectorAll('[data-vc-cr-dot]');
+    var progressBar = root.querySelector('[data-vc-cr-progress]');
+    var thumb = root.querySelector('[data-vc-cr-thumb]');
     var cards = track && track.querySelectorAll('.vc-cr-card');
-    if (!track || !cards || cards.length === 0 || dots.length === 0) return;
+    if (!track || !cards || cards.length === 0 || !thumb) return;
 
-    function updateActiveDot() {
+    var total = cards.length;
+    var thumbWidthPct = 100 / total;
+
+    function updateProgress() {
       var trackRect = track.getBoundingClientRect();
       var center = trackRect.left + trackRect.width / 2;
       var closestIndex = 0;
@@ -410,9 +408,11 @@
           closestIndex = i;
         }
       });
-      dots.forEach(function (dot, i) {
-        dot.classList.toggle('is-active', i === closestIndex);
-      });
+      thumb.style.width = thumbWidthPct + '%';
+      thumb.style.left = (closestIndex * thumbWidthPct) + '%';
+      if (progressBar) {
+        progressBar.setAttribute('aria-valuenow', String(closestIndex + 1));
+      }
     }
 
     var rafPending = false;
@@ -420,24 +420,12 @@
       if (rafPending) return;
       rafPending = true;
       requestAnimationFrame(function () {
-        updateActiveDot();
+        updateProgress();
         rafPending = false;
       });
     }, { passive: true });
 
-    dots.forEach(function (dot, i) {
-      dot.addEventListener('click', function () {
-        var card = cards[i];
-        if (!card) return;
-        var trackPaddingLeft = parseFloat(window.getComputedStyle(track).paddingLeft) || 0;
-        track.scrollTo({
-          left: card.offsetLeft - trackPaddingLeft,
-          behavior: 'smooth'
-        });
-      });
-    });
-
-    updateActiveDot();
+    updateProgress();
   })();
 </script>
 {%- endif -%}

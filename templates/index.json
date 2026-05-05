@@ -180,7 +180,8 @@
             "star_rating": 5,
             "body": "Three months in and the difference is night and day. I can walk the dog without my knee aching by the end. Bamboo material is so comfortable I forget I'm wearing it.",
             "name": "Margaret T.",
-            "location": "Brisbane, QLD"
+            "location": "Brisbane, QLD",
+            "linked_product": "test-knee-sleeve"
           }
         },
         "review_2": {
@@ -189,7 +190,8 @@
             "star_rating": 5,
             "body": "After my knee replacement my physio recommended graduated compression. The Vital Compress sleeve fits perfectly and I wear it daily. The support is excellent and the fabric breathes well in summer.",
             "name": "David L.",
-            "location": "Perth, WA"
+            "location": "Perth, WA",
+            "linked_product": "test-knee-sleeve"
           }
         },
         "review_3": {
@@ -198,7 +200,8 @@
             "star_rating": 5,
             "body": "I've tried three other brands. Vital Compress is the only one that doesn't slip down or pinch behind the knee. The bamboo doesn't smell after long wear either. Repurchasing.",
             "name": "Jennifer S.",
-            "location": "Melbourne, VIC"
+            "location": "Melbourne, VIC",
+            "linked_product": "test-knee-sleeve"
           }
         }
       },
